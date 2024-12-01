@@ -1,0 +1,38 @@
+@font-face {
+    font-family: f1;
+    src: url(../font/思源圓體/GenJyuuGothicX-Heavy.ttf);
+}
+
+@font-face {
+    font-family: thin;
+    src: url(../font/思源圓體/GenJyuuGothicX-Medium.ttf);
+}
+
+.mainFrame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    
+    .navSide{
+        width: 20%;
+        height: 100vh;
+        background-color: rgb(211, 123, 123);
+    }
+    .mainSide{
+        width: 65%;
+        height: 100vh;
+        background-color: rgb(108, 190, 133);
+    }
+    .infoSide{
+        width: 20%;
+        height: 100vh;
+        background-color: rgb(196, 110, 218);
+    }
+    
+    
+}
