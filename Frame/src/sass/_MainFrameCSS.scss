@@ -8,7 +8,15 @@
     src: url(../font/思源圓體/GenJyuuGothicX-Medium.ttf);
 }
 
-$nav_height:12vh;
+$nav_height: 12vh;
+@mixin all-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+body {
+    // overflow: hidden;
+}
 
 .mainFrame {
     position: relative;
@@ -32,10 +40,11 @@ $nav_height:12vh;
         height: $nav_height;
         width: 90%;
 
-        .searchBar{
+        .searchBar {
             display: flex;
             align-items: center;
-            .home{
+
+            .home {
                 height: 3rem;
                 aspect-ratio: 1/1;
                 border-radius: 50%;
@@ -43,34 +52,37 @@ $nav_height:12vh;
                 // background-color: #1f1f1f;
                 margin-right: 1rem;
             }
-            input{
-                padding: 1rem 10rem;
+
+            input {
+                // padding: 1rem 10rem;
+                height: 3rem;
+                width: 30rem;
                 border-radius: 25rem;
                 background-color: rgba(255, 255, 255, 0.55);
                 transition: .3s;
+                
             }
         }
 
         .memberBar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include all-center;
             position: relative;
 
-            .loginBtn{
-                &:not(:first-child){
+            .loginBtn {
+                &:not(:first-child) {
                     background-color: white;
                     color: black;
                 }
+
                 color: rgba(255, 255, 255, 0.884);
                 padding:0.8rem 2.5rem;
                 border-radius: 25px;
-                margin: 0 0.25rem ;
+                margin: 0 0.25rem;
                 font-weight: bold;
                 cursor: pointer;
             }
-            
-            .memberImg{
+
+            .memberImg {
                 height: 2.5rem;
                 aspect-ratio: 1/1;
                 background-color: white;
@@ -86,6 +98,8 @@ $nav_height:12vh;
         height: calc(100vh - $nav_height);
         width: 100%;
 
+
+
         .navSide {
             width: 20%;
             height: 100%;
@@ -94,10 +108,49 @@ $nav_height:12vh;
         }
 
         .mainSide {
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
             width: 65%;
-            height: 100%;
+            height: auto;
             background-color: rgb(108, 190, 133);
             overflow-y: scroll;
+            padding: 2rem;
+
+            .banner {
+                width: 100%;
+                height: 26rem;
+                background-color: white;
+                border-radius: 50px;
+            }
+
+            .blockes_container {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin-top:1.5rem ;
+
+                .block_outer {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    margin:  0.5rem;
+                    text-indent: 10px;
+                    .block_img {
+                        height: 14rem;
+                        aspect-ratio: 1/1;
+                        border-radius: 25px;
+                        background-color: white;
+                    }
+                    .texts{
+                        & h3,& h4{
+                            margin: 0;
+                        }
+                        
+                    }
+                }
+            }
         }
 
         .infoSide {

@@ -27,7 +27,67 @@ const MainFrame = () => {
             </nav>
             <div className='container'>
                 <div className="navSide"></div>
-                <div className="mainSide"></div>
+                <div className="mainSide">
+                    <div className="banner"></div>
+                    <div className="blockes_container">
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                        <div className="block_outer">
+                            <div className="block_img"></div>
+                            <div className="texts">
+                                <h3>Tittleeeee</h3>
+                                <h4>allen </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="infoSide"></div>
             </div>
         </div>
