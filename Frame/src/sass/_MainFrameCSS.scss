@@ -8,31 +8,105 @@
     src: url(../font/思源圓體/GenJyuuGothicX-Medium.ttf);
 }
 
+$nav_height:12vh;
+
 .mainFrame {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     background-color: black;
     color: white;
     height: 100vh;
     width: 100vw;
-    
-    .navSide{
-        width: 20%;
-        height: 100vh;
-        background-color: rgb(211, 123, 123);
+    font-family: "微軟正黑體";
+
+    #FrameNavbar {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        top: 0;
+        left: 0;
+        height: $nav_height;
+        width: 90%;
+
+        .searchBar{
+            display: flex;
+            align-items: center;
+            .home{
+                height: 3rem;
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.55);
+                // background-color: #1f1f1f;
+                margin-right: 1rem;
+            }
+            input{
+                padding: 1rem 10rem;
+                border-radius: 25rem;
+                background-color: rgba(255, 255, 255, 0.55);
+                transition: .3s;
+            }
+        }
+
+        .memberBar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            .loginBtn{
+                &:not(:first-child){
+                    background-color: white;
+                    color: black;
+                }
+                color: rgba(255, 255, 255, 0.884);
+                padding:0.8rem 2.5rem;
+                border-radius: 25px;
+                margin: 0 0.25rem ;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            
+            .memberImg{
+                height: 2.5rem;
+                aspect-ratio: 1/1;
+                background-color: white;
+                border-radius: 50%;
+                margin-right: 0.55rem;
+            }
+        }
     }
-    .mainSide{
-        width: 65%;
-        height: 100vh;
-        background-color: rgb(108, 190, 133);
+
+    .container {
+        display: flex;
+        position: relative;
+        height: calc(100vh - $nav_height);
+        width: 100%;
+
+        .navSide {
+            width: 20%;
+            height: 100%;
+            background-color: rgb(211, 123, 123);
+
+        }
+
+        .mainSide {
+            width: 65%;
+            height: 100%;
+            background-color: rgb(108, 190, 133);
+            overflow-y: scroll;
+        }
+
+        .infoSide {
+            width: 20%;
+            height: 100%;
+            background-color: rgb(196, 110, 218);
+        }
+
     }
-    .infoSide{
-        width: 20%;
-        height: 100vh;
-        background-color: rgb(196, 110, 218);
-    }
-    
-    
+
+
 }
