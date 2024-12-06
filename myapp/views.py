@@ -13,21 +13,25 @@ def produce_randomcode():
     return code
 
 def add_user(request):
+    print('imentry')
     if request.method == "POST":
         if request.POST.get('registBtn'):
+            global Username , Account , Password, email
             Username = request.POST.get("RegistUsername")   
             Account = request.POST.get("RegistAccount")
             Password = request.POST.get("RegistPassword")
             email = request.POST.get("RegistEmail")
             send_email(email,Username)
-
-            add_user = User.objects.create(
-                user_Name = Username,
-                user_Email = email,
-                user_Account = Account,
-                user_Password = Password
-            )
-            add_user.save()
+        elif request.POST.get('submitVCode'):
+            Verify_code = request.POST.get("VerifyCode")
+            if Verify_code == str(code):
+                add_user = User.objects.create(
+                    user_Name = Username,
+                    user_Email = email,
+                    user_Account = Account,
+                    user_Password = Password
+                )
+                add_user.save()
         return HttpResponse("correct" , status ="200")
 
 def send_email(receive_email,receiver_name):
