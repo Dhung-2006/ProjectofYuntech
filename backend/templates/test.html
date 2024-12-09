@@ -17,12 +17,12 @@
       <button name="RegistBtn" type="submit"  >song true</button>
     </div>
   </form>
-  
   <form id ="Verify" action="" method="POST">
     {% csrf_token %}
     <input name = "VerifyCode" type="text">
     <button name="submitVCode" type="submit">yan zhan</button>
   </form>  
+  <a href="{% url 'loginschreen'  %}" >登錄</a>
   <script>
     document.addEventListener("DOMContentLoaded",()=>{
       const fM = document.querySelector("#Basic");
