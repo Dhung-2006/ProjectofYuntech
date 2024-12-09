@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from 'react';
 import '../sass/output.css'
 import image from "../images/seeThat.jpg"
@@ -18,11 +19,7 @@ const MainFrame = () => {
 
     // form 
     const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" })
-
-
-
-    const URL = "";
-    // const screen_element = useRef();
+    const URL = "http://localhost:8000/regist";
     const userName = "Allenhnn_";
 
     // form events
@@ -33,19 +30,17 @@ const MainFrame = () => {
         setLoginData((...prevData) => ({ [name]: value }))
         console.log(name, value)
     }
-    const formSubmit = e => {
-        e.preventDefault();
-        fetch(URL,{
-            method:"POST",
-            body:JSON.stringify(loginData)
-        })
-        .then((res)=>{
-            if(!res){
-                throw new Error("pig out");
-            }
-        })
-
-    }
+    const formSubmit = async (e) => {
+        try {
+            const response = await axios.post(URL, loginData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        } catch (error) {
+            console.error("Error:", error);
+        } 
+    };
 
 
     // events
