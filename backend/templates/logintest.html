@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login" method="POST">
+        {%csrf_token%}
+        <input name="Account" type="text">
+        <input name="Password" type="Password">
+        <button name = "LoginBtn" type ="submit">登錄</button>
+
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            const fM  = document.querySelector("form");
+            const URL = "login" ;
+            const account = document.querySelector("input[name='Account']").value;
+            const password = document.querySelector("input[name='Password']").value;
+            const Btn = document.querySelector("button[name='LoginBtn']").name
+            fM.addEventListener("submit",(e)=>{
+                const data = new FormData(fM);
+                e.preventDefault();
+                data.append("loginBtn",Btn);
+                fetch(URL , {
+                    method : "POST",
+                    body : data
+                }).then((res)=>{
+                  if(!res){
+                    alert("piyan!")
+                  }
+                })
+            })
+        })
+    </script>
+</body>
+</html>
