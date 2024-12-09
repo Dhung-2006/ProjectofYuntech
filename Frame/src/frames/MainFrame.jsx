@@ -3,18 +3,51 @@ import '../sass/output.css'
 import image from "../images/seeThat.jpg"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faPause, faForwardStep, faBackwardStep, faExpand, faCompress, faVolumeLow, faPlay, faBook, faMusic, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPause, faForwardStep, faBackwardStep, faExpand, faCompress, faVolumeLow, faPlay, faBook, faMusic, faVideo, faG, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 
 const MainFrame = () => {
     const [loginStatus, setLoginStatus] = useState(0);
     const [volumnStatus, setVolumnStatus] = useState(0);
+    const [loginFrameStatus, setLoginFrameStatus] = useState(1);
+    const [loginFrame, setLoginFrame] = useState(1);
     const [fullScreenStatus, setFullScreenStatus] = useState(false);
     const [playBtn, setPlayBtn] = useState(false);
     const [volumn, setVolumn] = useState(75);
+
+    // form 
+    const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" })
+
+
+
+    const URL = "";
     // const screen_element = useRef();
     const userName = "Allenhnn_";
+
+    // form events
+
+    const inputChange = e => {
+        // setLoginData((prevData)=>)
+        const { name, value } = e.target
+        setLoginData((...prevData) => ({ [name]: value }))
+        console.log(name, value)
+    }
+    const formSubmit = e => {
+        e.preventDefault();
+        fetch(URL,{
+            method:"POST",
+            body:JSON.stringify(loginData)
+        })
+        .then((res)=>{
+            if(!res){
+                throw new Error("pig out");
+            }
+        })
+
+    }
+
+
     // events
     const changeVolumn = e => {
         setVolumn(e.target.value);
@@ -90,12 +123,12 @@ const MainFrame = () => {
                 {loginStatus == 0 ?
                     // 未登入
                     <div className='memberBar'>
-                        <div className='loginBtn'>註冊</div>
-                        <div className='loginBtn'>登入</div>
+                        <div className='loginBtn' onClick={() => { setLoginFrameStatus(1); setLoginFrame(0) }}>註冊</div>
+                        <div className='loginBtn' onClick={() => { setLoginFrameStatus(1); setLoginFrame(1) }}>登入</div>
                     </div>
                     :
                     // 登入
-                    <div className='memberBar'>
+                    <div className='memberBar logout' onClick={() => { setLoginStatus(0) }}>
                         <div className="memberImg"></div>
                         <h3>{userName}</h3>
                     </div>
@@ -274,8 +307,41 @@ const MainFrame = () => {
                     </div>
                 </div>
             </div>
+            <div className={`login_frame ${loginFrameStatus === 0 ? "opNone" : ""}`}>
+                <div className='login_container' >
+                    <div className="close" onClick={() => setLoginFrameStatus(0)}><FontAwesomeIcon icon={faXmark} /></div>
+                    <div className="logo">PigSystem</div>
+                    <div className='log_reg'>
+                        <div className={loginFrame !== 1 ? "clicked" : ""} onClick={() => setLoginFrame(0)} >註冊</div>
+                        <div className={loginFrame === 1 ? "clicked" : ""} onClick={() => setLoginFrame(1)} >登入</div>
+                    </div>
+                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`}>
+                        <div className='user_data'>
+                            <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} />
+                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} />
+                        </div>
+                        <div className='signInBtns'>
+                            <button type='submit' className='signInBtn' onSubmit={formSubmit}>登入</button>
+                            <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div>
+                        </div>
+                    </form>
+                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`}>
+                        <div className='user_data'>
+                            <input type="text" name='userCreateAccount' value={loginData.createAccount} onChange={inputChange} placeholder='使用者名稱' />
+                            <input type="email" name='userCreateEmail' value={loginData.email} onChange={inputChange} placeholder='E-mail' />
+                            <input type="password" name='userCreatePassword' value={loginData.createPassword} onChange={inputChange} placeholder='密碼' />
+                            <input type="password" name='userCreatePassword_c' value={loginData.createPassword_c} onChange={inputChange} placeholder='確認密碼' />
+                        </div>
+                        <div className='signInBtns'>
+                            <button type='submit' className='signInBtn' onSubmit={formSubmit} >註冊</button>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
         </div>
+
+
     )
     // npm start
     // sass xx.scss output.css

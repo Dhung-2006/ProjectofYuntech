@@ -7,6 +7,11 @@
   font-family: thin;
   src: url(../font/思源圓體/GenJyuuGothicX-Medium.ttf);
 }
+.opNone {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .f1 {
   font-family: f1;
 }
@@ -65,7 +70,7 @@ body {
   height: 3rem;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.15);
   margin-right: 1rem;
   cursor: pointer;
   transition: 0.2s;
@@ -82,7 +87,7 @@ body {
   border-radius: 25rem;
   font-size: 1.125rem;
   padding: 0 0 0 2rem;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.15);
   color: white;
   transition: 0.3s;
   border: none;
@@ -95,6 +100,8 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 0rem 2rem;
+  border-radius: 50px;
 }
 .mainFrame #FrameNavbar .memberBar .loginBtn {
   font-family: f1;
@@ -109,12 +116,44 @@ body {
   background-color: white;
   color: black;
 }
+.mainFrame #FrameNavbar .memberBar h3 {
+  font-family: f1;
+}
 .mainFrame #FrameNavbar .memberBar .memberImg {
   height: 2.5rem;
   aspect-ratio: 1/1;
-  background: url(../images/poyo.jpg);
+  background: url(../images/poyo.jpg) center center;
+  background-size: cover;
   border-radius: 50%;
   margin-right: 0.55rem;
+}
+.mainFrame #FrameNavbar .logout {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.mainFrame #FrameNavbar .logout::after {
+  content: "登出";
+  position: absolute;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 1.25rem;
+  font-family: f1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: rgba(195, 53, 53, 0.5);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: 0.25s;
+}
+.mainFrame #FrameNavbar .logout:hover::after {
+  opacity: 1;
+  width: 100%;
 }
 .mainFrame .container {
   display: flex;
@@ -262,9 +301,11 @@ body {
 .mainFrame .container .infoSide .songInfo img {
   width: 85%;
   aspect-ratio: 1/1;
+  border-radius: 10px;
 }
 .mainFrame .container .infoSide .songInfo .songName {
-  width: 90%;
+  width: 85%;
+  margin-top: 0.5rem;
 }
 .mainFrame .container .infoSide .songInfo .songName h2,
 .mainFrame .container .infoSide .songInfo .songName h4 {
@@ -275,7 +316,7 @@ body {
 }
 .mainFrame .container .infoSide .nextSong {
   position: relative;
-  width: 90%;
+  width: 85%;
 }
 .mainFrame .container .infoSide .nextSong .nextSongs {
   display: flex;
@@ -292,7 +333,8 @@ body {
   border-radius: 10px;
   margin-right: 1.2rem;
 }
-.mainFrame .container .infoSide .nextSong .nextSongs .suggestSong h4, .mainFrame .container .infoSide .nextSong .nextSongs .suggestSong h5 {
+.mainFrame .container .infoSide .nextSong .nextSongs .suggestSong h4,
+.mainFrame .container .infoSide .nextSong .nextSongs .suggestSong h5 {
   margin: 0;
 }
 .mainFrame .playBar {
@@ -404,6 +446,141 @@ body {
   border-radius: 50%;
   cursor: pointer;
   scale: 3;
+}
+.mainFrame .login_frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(37, 37, 37, 0.7882352941);
+  backdrop-filter: blur(5px);
+  transition: 0.5s;
+}
+.mainFrame .login_frame .login_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 19.25rem;
+  background-color: #252525;
+  font-family: f1;
+  border-radius: 20px;
+  transition: 0.5s;
+  padding: 5.5rem 5rem;
+}
+.mainFrame .login_frame .login_container .close {
+  position: absolute;
+  top: 5%;
+  right: 6%;
+  font-size: 1.5rem;
+  color: white;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.mainFrame .login_frame .login_container .close:hover {
+  opacity: 0.5;
+}
+.mainFrame .login_frame .login_container .logo {
+  font-size: 2.15rem;
+  font-weight: bold;
+}
+.mainFrame .login_frame .login_container .log_reg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0 1.5rem 0;
+}
+.mainFrame .login_frame .login_container .log_reg div {
+  position: relative;
+  margin: 0 1.5rem;
+  cursor: pointer;
+  font-size: 1.17rem;
+  transition: 0.25s;
+}
+.mainFrame .login_frame .login_container .log_reg div::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  transform: translate(-50%, 0);
+  height: 2px;
+  width: 20px;
+  background-color: rgb(157, 61, 205);
+  transition: 0.25s;
+  opacity: 0;
+}
+.mainFrame .login_frame .login_container .log_reg div.clicked::after {
+  opacity: 1;
+}
+.mainFrame .login_frame .login_container .log_reg div:hover {
+  opacity: 0.5;
+}
+.mainFrame .login_frame .login_container .log_reg div:hover::after {
+  opacity: 1;
+}
+.mainFrame .login_frame .login_container .fadeInout {
+  position: relative;
+  transition: 0.5s;
+}
+.mainFrame .login_frame .login_container .fadeInout.op0 {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+  pointer-events: none;
+}
+.mainFrame .login_frame .login_container .fadeInout .user_data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.mainFrame .login_frame .login_container .fadeInout .user_data input {
+  margin: 0.5rem 0;
+  padding: 1rem 5rem 1rem 2rem;
+  border-radius: 25px;
+}
+.mainFrame .login_frame .login_container .fadeInout .signInBtns {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.mainFrame .login_frame .login_container .fadeInout .signInBtns .signInBtn {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  font-family: f1;
+  padding: 0.85rem 0rem;
+  width: 100%;
+  border-radius: 25px;
+  background-color: rgb(157, 61, 205);
+  font-size: 1rem;
+  border: none;
+  color: white;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.mainFrame .login_frame .login_container .fadeInout .signInBtns .signInBtn:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+.mainFrame .login_frame .login_container .fadeInout .signInBtns .signInBtn:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: transparent;
+  margin: 0.2rem 0;
+}
+.mainFrame .login_frame .login_container .fadeInout .signInBtns .signInBtn:hover {
+  opacity: 0.6;
 }
 
 .YoutubeFrame {

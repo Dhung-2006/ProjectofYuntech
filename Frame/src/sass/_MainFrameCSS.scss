@@ -12,6 +12,11 @@ $nav_height: 12vh;
 $playBar_height: 9vh;
 $backdrop: #0000005d;
 
+.opNone {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .f1 {
     font-family: f1;
 }
@@ -84,7 +89,7 @@ body {
                 height: 3rem;
                 aspect-ratio: 1/1;
                 border-radius: 50%;
-                background-color: rgba(255, 255, 255, 0.15);
+                background-color: rgba(0, 0, 0, 0.15);
                 // background-color: #1f1f1f;
                 margin-right: 1rem;
                 cursor: pointer;
@@ -106,7 +111,7 @@ body {
                 border-radius: 25rem;
                 font-size: 1.125rem;
                 padding: 0 0 0 2rem;
-                background-color: rgba(255, 255, 255, 0.15);
+                background-color: rgba(0, 0, 0, 0.15);
                 color: white;
                 transition: .3s;
                 border: none;
@@ -120,6 +125,8 @@ body {
         .memberBar {
             @include all-center;
             position: relative;
+            padding: 0rem 2rem;
+            border-radius: 50px;
 
             .loginBtn {
                 font-family: f1;
@@ -137,12 +144,48 @@ body {
                 cursor: pointer;
             }
 
+            h3 {
+                font-family: f1;
+            }
+
             .memberImg {
                 height: 2.5rem;
                 aspect-ratio: 1/1;
-                background: url(../images/poyo.jpg);
+                background: url(../images/poyo.jpg) center center;
+                background-size: cover;
                 border-radius: 50%;
                 margin-right: 0.55rem;
+            }
+
+
+        }
+
+        .logout {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.25);
+            &::after {
+                content: "登出";
+                position: absolute;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                font-size: 1.25rem;
+                font-family: f1;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0%;
+                background-color: rgba(195, 53, 53, 0.5);
+                backdrop-filter: blur(20px);
+                opacity: 0;
+                transition: .25s;
+            }
+            &:hover::after{
+                opacity: 1;
+                width: 100%;
             }
         }
     }
@@ -316,7 +359,7 @@ body {
             backdrop-filter: blur(50px);
             margin: 5px;
             border-radius: 25px;
-            
+
             .songInfo {
                 display: flex;
                 flex-direction: column;
@@ -326,10 +369,12 @@ body {
                 img {
                     width: 85%;
                     aspect-ratio: 1/1;
+                    border-radius: 10px;
                 }
 
                 .songName {
-                    width: 90%;
+                    width: 85%;
+                    margin-top: 0.5rem;
 
                     h2,
                     h4 {
@@ -344,7 +389,7 @@ body {
 
             .nextSong {
                 position: relative;
-                width: 90%;
+                width: 85%;
 
                 .nextSongs {
                     display: flex;
@@ -353,14 +398,17 @@ body {
                     .suggestSong {
                         display: flex;
                         align-items: center;
-                        margin:0.5rem 0;
+                        margin: 0.5rem 0;
+
                         img {
                             height: 3.5rem;
                             aspect-ratio: 1/1;
                             border-radius: 10px;
                             margin-right: 1.2rem;
                         }
-                        h4,h5{
+
+                        h4,
+                        h5 {
                             margin: 0;
                         }
                     }
@@ -542,5 +590,164 @@ body {
         }
     }
 
+    .login_frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        background-color: #252525c9;
+        backdrop-filter: blur(5px);
+        transition: .5s;
 
+        .login_container {
+            position:relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            // height: 35rem;
+            // aspect-ratio: 0.45 / 0.55;
+            width: 19.25rem;
+            background-color: #252525;
+            font-family: f1;
+            border-radius: 20px;
+            transition: .5s;
+            padding: 5.5rem 5rem;
+
+            .close{
+                position: absolute;
+                top: 5%;
+                right: 6%;
+                font-size: 1.5rem;
+                color: white;
+                transition: .25s;
+                cursor: pointer;
+                &:hover{
+                    opacity: 0.5;
+                }
+            }
+            .logo {
+                font-size: 2.15rem;
+                font-weight: bold;
+
+            }
+
+            .log_reg {
+                @include all-center;
+                margin: 2rem 0 1.5rem 0;
+
+                div {
+                    position: relative;
+                    margin: 0 1.5rem;
+                    cursor: pointer;
+                    font-size: 1.17rem;
+                    transition: .25s;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        left: 50%;
+                        bottom: -20%;
+                        transform: translate(-50%, 0);
+                        height: 2px;
+                        width: 20px;
+                        background-color: rgb(157, 61, 205);
+                        transition: .25s;
+                        opacity: 0;
+                    }
+
+                    &.clicked::after {
+                        opacity: 1;
+                    }
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
+
+                    &:hover::after {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .fadeInout {
+                &.op0 {
+                    opacity: 0;
+                    visibility: hidden;
+                    display: none;
+                    pointer-events: none;
+                }
+
+                position: relative;
+                transition: .5s;
+
+                .user_data {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    input {
+                        margin: 0.5rem 0;
+                        padding: 1rem 5rem 1rem 2rem;
+                        border-radius: 25px;
+                    }
+                }
+
+                .signInBtns {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 1.5rem;
+
+                    .signInBtn {
+                        display: flex;
+                        align-content: center;
+                        justify-content: center;
+                        font-family: f1;
+                        padding: 0.85rem 0rem;
+                        width: 100%;
+                        border-radius: 25px;
+                        background-color: rgb(157, 61, 205);
+                        font-size: 1rem;
+                        border: none;
+                        color: white;
+                        transition: .25s;
+                        cursor: pointer;
+
+                        &:nth-child(2) {
+                            // opacity: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            // color: #252525;
+                            background-color: transparent;
+
+                        }
+
+                        &:nth-child(2) {
+                            // opacity: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            // color: #252525;
+                            color: white;
+                            background-color: transparent;
+                            margin: 0.2rem 0;
+
+                        }
+
+                        &:hover {
+                            opacity: 0.6;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }
