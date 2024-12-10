@@ -27,11 +27,7 @@ class ReactView(APIView):
             return Response(serializer.data)
 
 
-def loginschreen(request):
-    return render(request , "logintest.html" , locals())
 
-def logincorrect(request):
-    return render(request , "logincorrect.html" , locals())
 
 def produce_randomcode():
     global code
@@ -73,6 +69,7 @@ def send_email(receive_email,receiver_name):
     smtp.quit()
 
 def login(request):
+    print("g")
     if request.method=="POST":
         if request.POST.get('loginBtn'):
             fill_account = request.POST.get('Account')

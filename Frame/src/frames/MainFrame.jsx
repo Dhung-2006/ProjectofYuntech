@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect, useRef, useState } from 'react';
 import '../sass/output.css'
@@ -6,6 +7,9 @@ import image from "../images/seeThat.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faPause, faForwardStep, faBackwardStep, faExpand, faCompress, faVolumeLow, faPlay, faBook, faMusic, faVideo, faG, faXmark } from '@fortawesome/free-solid-svg-icons';
 
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.withCredentials = true
 
 
 const MainFrame = () => {
@@ -19,27 +23,38 @@ const MainFrame = () => {
 
     // form 
     const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" })
-    const URL = "http://localhost:8000/regist";
+    const URL = "http://localhost:8000/registe";
     const userName = "Allenhnn_";
 
-    // form events
 
+    const csrftoken ="DyN0BqI3CN2YNAD9LMwkIrPP6V0PNtiJ"
+
+    // cookie
+    // const csrftoken = Cookies.get('csrftoken')
+    // const cookies = new Cookies();
+    // console.log(csrftoken ,"csrftoken")
+    // form events
     const inputChange = e => {
         // setLoginData((prevData)=>)
         const { name, value } = e.target
         setLoginData((...prevData) => ({ [name]: value }))
         console.log(name, value)
     }
+    console.log(csrftoken)
     const formSubmit = async (e) => {
+        e.preventDefault();
+        console.log("9")
         try {
             const response = await axios.post(URL, loginData, {
                 headers: {
                     "Content-Type": "application/json",
+                    'X-CSRFToken': csrftoken
                 },
+                withCredentials: true 
             });
         } catch (error) {
             console.error("Error:", error);
-        } 
+        }
     };
 
 
@@ -302,7 +317,7 @@ const MainFrame = () => {
                     </div>
                 </div>
             </div>
-            <div className={`login_frame ${loginFrameStatus === 0 ? "opNone" : ""}`}>
+            <div className={`login_frame ${loginFrameStatus === 0 ? "opNone" : ""}`} >
                 <div className='login_container' >
                     <div className="close" onClick={() => setLoginFrameStatus(0)}><FontAwesomeIcon icon={faXmark} /></div>
                     <div className="logo">PigSystem</div>
@@ -310,17 +325,17 @@ const MainFrame = () => {
                         <div className={loginFrame !== 1 ? "clicked" : ""} onClick={() => setLoginFrame(0)} >註冊</div>
                         <div className={loginFrame === 1 ? "clicked" : ""} onClick={() => setLoginFrame(1)} >登入</div>
                     </div>
-                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`}>
+                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={formSubmit}>
                         <div className='user_data'>
                             <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} />
                             <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} />
                         </div>
                         <div className='signInBtns'>
-                            <button type='submit' className='signInBtn' onSubmit={formSubmit}>登入</button>
+                            <button type='submit' className='signInBtn' >登入</button>
                             <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div>
                         </div>
                     </form>
-                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`}>
+                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`} onSubmit={formSubmit}>
                         <div className='user_data'>
                             <input type="text" name='userCreateAccount' value={loginData.createAccount} onChange={inputChange} placeholder='使用者名稱' />
                             <input type="email" name='userCreateEmail' value={loginData.email} onChange={inputChange} placeholder='E-mail' />
@@ -328,7 +343,7 @@ const MainFrame = () => {
                             <input type="password" name='userCreatePassword_c' value={loginData.createPassword_c} onChange={inputChange} placeholder='確認密碼' />
                         </div>
                         <div className='signInBtns'>
-                            <button type='submit' className='signInBtn' onSubmit={formSubmit} >註冊</button>
+                            <button type='submit' className='signInBtn'  >註冊</button>
                         </div>
                     </form>
                 </div>
