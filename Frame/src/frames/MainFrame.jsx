@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true
 
 
 const MainFrame = () => {
-    const [loginStatus, setLoginStatus] = useState(0);
+    const [loginStatus, setLoginStatus] = useState(1);
     const [volumnStatus, setVolumnStatus] = useState(0);
     const [loginFrameStatus, setLoginFrameStatus] = useState(1);
     const [loginFrame, setLoginFrame] = useState(1);
@@ -26,8 +26,9 @@ const MainFrame = () => {
     const URL = "http://localhost:8000/registe";
     const userName = "Allenhnn_";
 
-
-    const csrftoken ="DyN0BqI3CN2YNAD9LMwkIrPP6V0PNtiJ"
+    const cookie = Cookies.get("csrftoken");
+    console.log("su " , cookie)
+    // const csrftoken ="DyN0BqI3CN2YNAD9LMwkIrPP6V0PNtiJ";
 
     // cookie
     // const csrftoken = Cookies.get('csrftoken')
@@ -38,9 +39,8 @@ const MainFrame = () => {
         // setLoginData((prevData)=>)
         const { name, value } = e.target
         setLoginData((...prevData) => ({ [name]: value }))
-        console.log(name, value)
     }
-    console.log(csrftoken)
+    console.log(cookie)
     const formSubmit = async (e) => {
         e.preventDefault();
         console.log("9")
@@ -48,7 +48,7 @@ const MainFrame = () => {
             const response = await axios.post(URL, loginData, {
                 headers: {
                     "Content-Type": "application/json",
-                    'X-CSRFToken': csrftoken
+                    'X-CSRFToken': cookie
                 },
                 withCredentials: true 
             });

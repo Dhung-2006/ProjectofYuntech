@@ -38,7 +38,6 @@ def add_user(request):
     print('imentry')
     if request.method == "POST":
         if request.POST.get('registBtn'):
-            global Username , Account , Password, email
             Username = request.POST.get("RegistUsername")   
             Account = request.POST.get("RegistAccount")
             Password = request.POST.get("RegistPassword")

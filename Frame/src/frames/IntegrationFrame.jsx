@@ -1,6 +1,8 @@
 const IntegrationFrame = () =>{
     return(
-        
+        <div>
+            
+        </div>
     )
 }
 
