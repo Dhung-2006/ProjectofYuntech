@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+歐!/usr/bin/env PythonFinalizationError
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
