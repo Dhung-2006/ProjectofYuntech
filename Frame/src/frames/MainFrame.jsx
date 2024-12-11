@@ -22,8 +22,8 @@ const MainFrame = () => {
     const [volumn, setVolumn] = useState(75);
 
     // form 
-    const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" })
-    const URL = "http://localhost:8000/registe";
+    const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" , logStatus : ""})
+    const URL = "http://localhost:8000/login";
     const userName = "Allenhnn_";
 
     const cookie = Cookies.get("csrftoken");
@@ -41,9 +41,12 @@ const MainFrame = () => {
         setLoginData((...prevData) => ({ [name]: value }))
     }
     console.log(cookie)
-    const formSubmit = async (e) => {
+
+    const formSubmit = (arg) => async (e) => {
+        console.log(e)
+        console.log(arg)
+        setLoginData((...prevData) => ({[loginStatus]:arg}))
         e.preventDefault();
-        console.log("9")
         try {
             const response = await axios.post(URL, loginData, {
                 headers: {
@@ -56,6 +59,21 @@ const MainFrame = () => {
             console.error("Error:", error);
         }
     };
+    // const formSubmit = async (e) => {
+    //     console.log(e)
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.post(URL, loginData, {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 'X-CSRFToken': cookie
+    //             },
+    //             withCredentials: true 
+    //         });
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //     }
+    // };
 
 
     // events
@@ -325,17 +343,17 @@ const MainFrame = () => {
                         <div className={loginFrame !== 1 ? "clicked" : ""} onClick={() => setLoginFrame(0)} >註冊</div>
                         <div className={loginFrame === 1 ? "clicked" : ""} onClick={() => setLoginFrame(1)} >登入</div>
                     </div>
-                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={formSubmit}>
+                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={formSubmit("sign")}>
                         <div className='user_data'>
                             <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} />
                             <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} />
                         </div>
                         <div className='signInBtns'>
-                            <button type='submit' className='signInBtn' >登入</button>
+                            <button type='submit' className='signInBtn'>登入</button>
                             <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div>
                         </div>
                     </form>
-                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`} onSubmit={formSubmit}>
+                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`} onSubmit={formSubmit("regist")}>
                         <div className='user_data'>
                             <input type="text" name='userCreateAccount' value={loginData.createAccount} onChange={inputChange} placeholder='使用者名稱' />
                             <input type="email" name='userCreateEmail' value={loginData.email} onChange={inputChange} placeholder='E-mail' />
@@ -343,7 +361,7 @@ const MainFrame = () => {
                             <input type="password" name='userCreatePassword_c' value={loginData.createPassword_c} onChange={inputChange} placeholder='確認密碼' />
                         </div>
                         <div className='signInBtns'>
-                            <button type='submit' className='signInBtn'  >註冊</button>
+                            <button type='submit' className='signInBtn'>註冊</button>
                         </div>
                     </form>
                 </div>

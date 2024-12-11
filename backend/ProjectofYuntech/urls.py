@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',ReactView.as_view() ),
     # path('logintest' , views.loginschreen , name="loginschreen" ),
-    path('registe' , add_user , name="registe"),
-    # path('login' , views.login , name="login"),
+    # path('registe' , add_user , name="registe"),
+    path('login' , login , name="login"),
     # path('logincorrect', views.logincorrect,name='logincorrect')
 ]

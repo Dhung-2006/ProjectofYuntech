@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from .models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect , JsonResponse
 import smtplib
 import random
 from rest_framework.views import APIView
@@ -70,21 +70,20 @@ def send_email(receive_email,receiver_name):
 def login(request):
     print("g")
     if request.method=="POST":
-        if request.POST.get('loginBtn'):
-            fill_account = request.POST.get('Account')
-            fill_password = request.POST.get('Password')
-            print(fill_password)
-            # try:
-            user_info =  User.objects.get(user_Account =fill_account )
-            user_password = user_info.user_Password
-            if user_password == fill_password:
-                print('account correct')
-                return redirect("logincorrect")
-            print(123)
-            return HttpResponse('12312313')
+        print(request.body)
+        # print("good entry")
+        # if request.POST.get('loginBtn'):
+        # fill_account = request.POST.get('Account')
+        # fill_password = request.POST.get('Password')
+        # print(fill_password)
+        # # try:
+        # user_info =  User.objects.get(user_Account =fill_account )
+        # user_password = user_info.user_Password
+        
+            # return HttpResponse('12312313')
             # except  User.DoesNotExist: 
             #     return HttpResponse('No account', status = 111)
-             
+        return HttpResponse("good" , status = '100')
 
     # return HttpResponse("coorect ", status ="200")
     # dexterplay200604
