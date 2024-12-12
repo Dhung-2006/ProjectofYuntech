@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from . models import *
 from rest_framework.response import Response
 from . serializer import *
+import json
 
 class ReactView(APIView):
     def get(self, request):
@@ -71,6 +72,8 @@ def login(request):
     print("g")
     if request.method=="POST":
         print(request.body)
+        # data  = json.load(request.body)
+        # print(data)
         # print("good entry")
         # if request.POST.get('loginBtn'):
         # fill_account = request.POST.get('Account')

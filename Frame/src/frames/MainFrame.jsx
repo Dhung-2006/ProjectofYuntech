@@ -38,17 +38,17 @@ const MainFrame = () => {
     const inputChange = e => {
         // setLoginData((prevData)=>)
         const { name, value } = e.target
-        setLoginData((...prevData) => ({ [name]: value }))
+        setLoginData((prevData) => ({...prevData, [name]: value }))
     }
     console.log(cookie)
 
     const formSubmit = (arg) => async (e) => {
-        console.log(e)
-        console.log(arg)
-        setLoginData((...prevData) => ({[loginStatus]:arg}))
+        setLoginData((prevData) => ({"logStatus":arg}))
         e.preventDefault();
+        console.log("loginData",JSON.stringify(loginData))
+        const POSTdata = JSON.stringify(loginData);
         try {
-            const response = await axios.post(URL, loginData, {
+            const response = await axios.post(URL, POSTdata, {
                 headers: {
                     "Content-Type": "application/json",
                     'X-CSRFToken': cookie
@@ -58,6 +58,7 @@ const MainFrame = () => {
         } catch (error) {
             console.error("Error:", error);
         }
+        // setLoginData({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" , logStatus : ""})
     };
     // const formSubmit = async (e) => {
     //     console.log(e)
@@ -345,8 +346,8 @@ const MainFrame = () => {
                     </div>
                     <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={formSubmit("sign")}>
                         <div className='user_data'>
-                            <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} />
-                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} />
+                            <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} required/>
+                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} required/>
                         </div>
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn'>登入</button>
@@ -355,10 +356,10 @@ const MainFrame = () => {
                     </form>
                     <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`} onSubmit={formSubmit("regist")}>
                         <div className='user_data'>
-                            <input type="text" name='userCreateAccount' value={loginData.createAccount} onChange={inputChange} placeholder='使用者名稱' />
-                            <input type="email" name='userCreateEmail' value={loginData.email} onChange={inputChange} placeholder='E-mail' />
-                            <input type="password" name='userCreatePassword' value={loginData.createPassword} onChange={inputChange} placeholder='密碼' />
-                            <input type="password" name='userCreatePassword_c' value={loginData.createPassword_c} onChange={inputChange} placeholder='確認密碼' />
+                            <input type="text" name='userCreateAccount' value={loginData.createAccount} onChange={inputChange} placeholder='使用者名稱'  />
+                            <input type="email" name='userCreateEmail' value={loginData.email} onChange={inputChange} placeholder='E-mail'  />
+                            <input type="password" name='userCreatePassword' value={loginData.createPassword} onChange={inputChange} placeholder='密碼'  />
+                            <input type="password" name='userCreatePassword_c' value={loginData.createPassword_c} onChange={inputChange} placeholder='確認密碼'  />
                         </div>
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn'>註冊</button>
