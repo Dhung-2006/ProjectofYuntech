@@ -43,6 +43,8 @@ const MainFrame = () => {
     console.log(cookie)
 
     const formSubmit = (arg) => async (e) => {
+        console.log(e)
+        console.log(arg)
         setLoginData((prevData) => ({"logStatus":arg}))
         e.preventDefault();
         console.log("loginData",JSON.stringify(loginData))
@@ -346,8 +348,8 @@ const MainFrame = () => {
                     </div>
                     <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={formSubmit("sign")}>
                         <div className='user_data'>
-                            <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} required/>
-                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} required/>
+                            <input type="text" name='userAccount' value={loginData.account} placeholder='   名稱' onChange={inputChange} />
+                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} />
                         </div>
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn'>登入</button>
