@@ -23,8 +23,7 @@ from myapp.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',ReactView.as_view() ),
-    # path('logintest' , views.loginschreen , name="loginschreen" ),
-    # path('registe' , add_user , name="registe"),
     path('login' , login , name="login"),
-    # path('logincorrect', views.logincorrect,name='logincorrect')
-]
+    path('regist' , regist_account , name = 'regist'),
+    path('recommand' , produce_randomRecommand ,name = 'recommand'),
+]           
