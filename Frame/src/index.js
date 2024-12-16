@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route , Routes} from 'react-router-dom';
 // frames
 import MainFrame from './frames/MainFrame'
-import YoutubeFrame from './frames/YoutubeFrame'
+import IntegrationFrame from './frames/IntegrationFrame'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +16,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<MainFrame />} />
-      <Route path='/YtFrame' element={<YoutubeFrame />} />
+      <Route path='/frame_2' element={<IntegrationFrame />} />
       
     </Routes>
   </BrowserRouter>
