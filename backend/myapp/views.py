@@ -16,7 +16,7 @@ def send_email(receive_email,receiver_name):
     my_email = "systemyuntech@gmail.com"
     receiver = receive_email
     verify_code = produce_randomcode()
-    masage =f"Subject:YuntechSystem 驗證碼/n{receiver_name}您的驗證碼為：{verify_code}"
+    masage =f"Subject:YuntechSystem 驗證碼\n{receiver_name}您的驗證碼為：{verify_code}"
     status = smtp.sendmail(my_email,receiver,masage.encode('utf-8'))
     smtp.quit()
     return verify_code
@@ -27,8 +27,6 @@ def produce_randomcode():
     return code
 
 def produce_randomRecommand(request):
-    music_len=len(Music.objects.all()) #all data of music
-    film_len = len(Film.objects.all()) #all data of film
     musics_id = Music.objects.values_list('music_ID',flat=True)  # id list -- music
     films_id = Film.objects.values_list('film_ID',flat=True)  # id list -- film
     music_random_list = []
@@ -76,9 +74,9 @@ class ReactView(APIView):
             return Response(serializer.data)
 
 def login(request):
-    print("g")
+    # print("g")
     if request.method=="POST":
-        print(request.body)
+        # print(request.body)
         data  = json.loads(request.body.decode('utf-8'))
         if data['logStatus'] == "sign":
             fill_account  = data['userAccount']      
@@ -99,35 +97,57 @@ def login(request):
             print(user_json)
             return JsonResponse(user_json , safe=False)
         elif data['logStatus'] == "regist":
-            cUser_account = data['userCreateAccount']
-            cUser_email  = data['userCreateEmail']
-            verify = send_email(cUser_email, cUser_account)
-            code_json  = {
-                'User_account': cUser_account,
-                'User_email':cUser_email,
-                'verify_code':verify,
-            }
-            return JsonResponse(code_json , safe=False)
-        
-
-def regist_account(request):
-    if request.method == "POST":
-        data = json.loads(request.body.decode('utf-8'))
-        cUser_Name = data['userCreateName']
-        cUser_Account = data['userCreateAccount']
-        cUser_Password  = data['userCreatePasswrod']
-        cUser_Email = data['userCreateEmail']
-        add_user = User.objects.create(
+            cUser_Name = data['userCreateName']
+            cUser_Account = data['userCreateAccount']
+            cUser_Password  = data['userCreatePasswrod']
+            cUser_Email = data['userCreateEmail']
+            add_user = User.objects.create(
             user_Name = cUser_Name,
             user_Email = cUser_Email,
             user_Account = cUser_Account,
             user_Password = cUser_Password
-        )
-        add_user.save()
-        return HttpResponse("correct" , status ="200")
-        
+            )
+            add_user.save()
+            return HttpResponse("success" , status = '200')
 
+def verify_email(request):
+    if request.method =="POST":
+        data =  json.loads(request.body.decode('utf-8'))
+        email = data['userEmail']
+        name = data['userName']
+        send_email(email,name)
+        verify_code  = send_email(email, name)
+        code_json = {
+            'verify_code' :verify_code,
+        }    
+        return JsonResponse(code_json,safe=False)
 
+def verify_success(request):
+    data =  json.loads(request.body.decode('utf-8'))
+    userName = data['userName']
+    userEmail = data['userEmail']
+    user = User.objects.get(user_Name = userName)
+    user.user_Email = userEmail
+    user.save()
+    return HttpResponse('success' , status = '200')
+
+def edit_request(request):
+    if request.method =="POST":
+        re_user = json.loads(request.body.decode('utf-8'))
+        user = re_user['RequestUser']
+        user_data = User.objects.get(user_ID= user)
+        re_json = {
+            'User_name':user_data.user_Name,
+            'User_Email':user_data.user_Email,
+            'User_Image_location':user_data.user_Image
+        }
+    return JsonResponse(re_json ,safe= False )
+
+def edit_user_information(request):
+    if request.method=="POST":
+        edit_data = json.loads(request.body.decode('utf-8'))
+        Edit_user = edit_data['editUserName']
+        Edit_Email = edit_data['editUserEmail']
 
 
 

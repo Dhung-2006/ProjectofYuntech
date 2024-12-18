@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',ReactView.as_view() ),
     path('login' , login , name="login"),
-    path('regist' , regist_account , name = 'regist'),
     path('recommand' , produce_randomRecommand ,name = 'recommand'),
+    path('editRequest',edit_request,name="editRequest"),
+    path('requestEmail' , verify_email, name='requestEmail'),
+    path('requestEmail/verifySuccess' , verify_success , name='verifySuccess'),
 ]           
