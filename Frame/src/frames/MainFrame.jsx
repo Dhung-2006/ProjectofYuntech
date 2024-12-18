@@ -1,8 +1,10 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate} from 'react-router-dom';
 import '../sass/output.css'
-import image from "../images/seeThat.jpg"
+import image from "../images/seeThat.jpg";
+import fish from "../images/fish.jpg";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faPause, faForwardStep, faBackwardStep, faExpand, faCompress, faVolumeLow, faPlay, faBook, faMusic, faVideo, faG, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -13,13 +15,26 @@ axios.defaults.withCredentials = true
 
 
 const MainFrame = () => {
-    const [loginStatus, setLoginStatus] = useState(1);
+    const navigate = useNavigate()
+
+    const [loginStatus, setLoginStatus] = useState(1); // 登入狀態
     const [volumnStatus, setVolumnStatus] = useState(0);
-    const [loginFrameStatus, setLoginFrameStatus] = useState(1);
-    const [loginFrame, setLoginFrame] = useState(1);
+    const [loginFrameStatus, setLoginFrameStatus] = useState(0);  // 登入畫面
+    const [loginFrame, setLoginFrame] = useState(0); // 登入框
     const [fullScreenStatus, setFullScreenStatus] = useState(false);
     const [playBtn, setPlayBtn] = useState(false);
     const [volumn, setVolumn] = useState(75);
+
+
+    // verify
+    const verify = () =>{
+        if(loginStatus == 0){
+            return false;
+        }
+        else if (loginStatus == 1){
+            return true;
+        }
+    }
 
     // form 
     const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "", logStatus: "" })
@@ -30,10 +45,7 @@ const MainFrame = () => {
     console.log("su ", cookie)
     // const csrftoken ="DyN0BqI3CN2YNAD9LMwkIrPP6V0PNtiJ";
 
-    // cookie
-    // const csrftoken = Cookies.get('csrftoken')
-    // const cookies = new Cookies();
-    // console.log(csrftoken ,"csrftoken")
+
     // form events
     const inputChange = e => {
         // setLoginData((prevData)=>)
@@ -60,22 +72,6 @@ const MainFrame = () => {
         }
         // setLoginData({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" , logStatus : ""})
     };
-    // const formSubmit = async (e) => {
-    //     console.log(e)
-    //     e.preventDefault();
-    //     try {
-    //         const response = await axios.post(URL, loginData, {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'X-CSRFToken': cookie
-    //             },
-    //             withCredentials: true 
-    //         });
-    //     } catch (error) {
-    //         console.error("Error:", error);
-    //     }
-    // };
-
 
     // events
     const changeVolumn = e => {
@@ -172,26 +168,26 @@ const MainFrame = () => {
                         <h2>Allenhnn</h2>
                     </div>
                     <div className="funcitons">
-                        <div>
+                        <div onClick={loginStatus ? ()=>navigate("/") : ()=> alert("none")}>
                             <FontAwesomeIcon icon={faHouse} />
                             <h4>主頁</h4>
                         </div>
-                        <div>
+                        <div onClick={loginStatus ? ()=>navigate("/frame_2") : ()=> alert("none")}>
                             <FontAwesomeIcon icon={faVideo} />
                             <h4>影片</h4>
                         </div>
-                        <div>
+                        <div onClick={loginStatus ? ()=>navigate("/frame_2") : ()=> alert("none")}>
                             <FontAwesomeIcon icon={faMusic} />
                             <h4>音樂</h4>
                         </div>
-                        <div>
+                        <div onClick={loginStatus ? ()=>navigate("/frame_2") : ()=> alert("none")}>
                             <FontAwesomeIcon icon={faBook} />
                             <h4>電子書</h4>
                         </div>
                     </div>
                 </div>
                 <div className="mainSide">
-                    <div className="banner"></div>
+                    <div className="banner"><img src={fish} alt="" /></div>
 
                     <div className="blockes_container">
                         <div className="blockes_info">

@@ -1,12 +1,14 @@
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../sass/output.css'
 import image from "../images/seeThat.jpg"
 import testmusic from "../video/1.mp3";
+import fish from "../images/fish.jpg";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faPause, faForwardStep, faBackwardStep, faExpand, faCompress, faVolumeLow, faPlay, faBook, faMusic, faVideo, faG, faXmark, faDisplay, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPause, faForwardStep, faBackwardStep, faVolumeLow, faPlay, faBook, faMusic, faVideo, faUpRightFromSquare, faEllipsis, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -14,15 +16,20 @@ axios.defaults.withCredentials = true;
 
 
 const IntegrationFrame = () => {
+    const navigate = useNavigate()
+
     const [loginStatus, setLoginStatus] = useState(1);
-    const [volumnStatus, setVolumnStatus] = useState(0);
-    const [loginFrameStatus, setLoginFrameStatus] = useState(1);
-    const [loginFrame, setLoginFrame] = useState(1);
     const [fullScreenStatus, setFullScreenStatus] = useState(false);
     const [playBtn, setPlayBtn] = useState(false);
     const [volumn, setVolumn] = useState(75);
-    const [frameTime, setFrameTime] = useState(50);
-    const audioMusic = useRef();
+
+    // music
+    const [frameTime, setFrameTime] = useState(0); // 時間軸
+    const [musicLong, setmusicLong] = useState(0);  // 總長
+    const [musicDuration, setmusicDuration] = useState(0);  // 時長
+    const audioMusic = useRef(null);
+
+
     console.log("current", audioMusic.current)
 
     const [musicFrame, setMusicFrame] = useState(false);
@@ -140,6 +147,10 @@ const IntegrationFrame = () => {
     }
     const changeFrameTime_f = e => {
         setFrameTime(e.target.value);
+        audioMusic.current.currentTime = e.target.value / 100 * musicLong; // 要重新渲染
+        setmusicDuration(e.target.value / 100 * musicLong);
+        console.log("--------------value", e.target.value / 100 * musicLong);
+
     }
     const playBtnStatus = () => {
         if (playBtn) {
@@ -149,12 +160,12 @@ const IntegrationFrame = () => {
             setPlayBtn(true);
         }
     }
-    
+
     const playMusic = () => {
         if (audioMusic.current) {
             audioMusic.current.play()
-            console.log(audioMusic.current.currentTime)
-            console.log(audioMusic.current.duration/60)
+            // console.log(audioMusic.current.currentTime)
+            // console.log(audioMusic.current.duration / 60)
         }
     }
     const pauseMusic = () => {
@@ -164,58 +175,102 @@ const IntegrationFrame = () => {
         }
     }
 
+    const handleMusicDuration = () => {
+        if (audioMusic.current) {
+            let cTime = audioMusic.current.currentTime;
+            let timeLine = (cTime / audioMusic.current.duration) * 100;
+            console.log("cTime", cTime)
+            console.log((cTime / audioMusic.current.duration) * 100)
+            // let timeLine = cTime / 
+            setmusicDuration(cTime);
+
+            setFrameTime(timeLine)
+        }
+    }
+
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    };
+
+
 
     return (
         <div className="integrationFrame">
-            <nav id='FrameNavbar'>
-                <h1 className='logo f1'>PigSystem</h1>
-                <div className='searchBar'>
-                    <div className="home"><FontAwesomeIcon icon={faHouse} /></div>
-                    <input type="text" placeholder='查詢想要的音樂...' />
-                </div>
-                {loginStatus == 0 ?
-                    // 未登入
-                    <div className='memberBar'>
-                        <div className='loginBtn' onClick={() => { setLoginFrameStatus(1); setLoginFrame(0) }}>註冊</div>
-                        <div className='loginBtn' onClick={() => { setLoginFrameStatus(1); setLoginFrame(1) }}>登入</div>
-                    </div>
-                    :
-                    // 登入
-                    <div className='memberBar logout' onClick={() => { setLoginStatus(0) }}>
-                        <div className="memberImg"></div>
-                        <h3>{userName}</h3>
-                    </div>
-                }
 
-            </nav>
+            <div className="navSide">
+                <div className="userInfo" >
+                    <div className="userImg"></div>
+                    <div>
+                        <h2>Allenhnn</h2>
+                        <div className="status">
+                            <div className="circle"></div>
+                            &nbsp;
+                            &nbsp;
+                            <p>Online</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div className="nav_line"></div>
+                <div className="funcitons">
+                    <div onClick={() => navigate("/")}>
+                        <FontAwesomeIcon icon={faHouse} />
+                        <h4>主頁</h4>
+                    </div>
+                    <div>
+                        <FontAwesomeIcon icon={faVideo} />
+                        <h4>影片</h4>
+                    </div>
+                    <div>
+                        <FontAwesomeIcon icon={faMusic} />
+                        <h4>音樂</h4>
+                    </div>
+                    <div>
+                        <FontAwesomeIcon icon={faBook} />
+                        <h4>電子書</h4>
+                    </div>
+                </div>
+
+                <div className="listenTime">
+                    <div className="black_drop"></div>
+                    <div className="texts">
+                        <h1>您已經聽了</h1>
+                        <h1>1024</h1>
+                        <h1>分鐘</h1>
+                    </div>
+                </div>
+
+            </div>
+
 
             <div className='container'>
-                <div className="navSide">
-                    <div className="userInfo" >
-                        <div className="userImg"></div>
-                        <h2>Allenhnn</h2>
+                <nav id='FrameNavbar'>
+                    <div className="careInfo">
+                        <h1>晚安 {userName}</h1>
                     </div>
-                    <div className="funcitons">
-                        <div>
-                            <FontAwesomeIcon icon={faHouse} />
-                            <h4>主頁</h4>
-                        </div>
-                        <div>
-                            <FontAwesomeIcon icon={faVideo} />
-                            <h4>影片</h4>
-                        </div>
-                        <div>
-                            <FontAwesomeIcon icon={faMusic} />
-                            <h4>音樂</h4>
-                        </div>
-                        <div>
-                            <FontAwesomeIcon icon={faBook} />
-                            <h4>電子書</h4>
+                    <div className='searchBar'>
+                        {/* <div className="home" onClick={() => navigate('/')}><FontAwesomeIcon icon={faHouse} /></div> */}
+                        <input type="text" placeholder='查詢想要的音樂...' />
+                        <div className="userFunc">
+                            <div className="moreBtn"><FontAwesomeIcon icon={faEllipsis} />
+                                <div className="hidden_item">
+                                    <div className="delete"><FontAwesomeIcon icon={faTrash} /></div>
+                                    <div className="create"><FontAwesomeIcon icon={faPlus} /></div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                    {/* <div className='memberBar logout' onClick={() => { setLoginStatus(0) }}>
+                        <div className="memberImg"></div>
+                        <h3>{userName}</h3>
+                    </div> */}
+
+                </nav>
                 <div className="mainSide">
-                    <div className="banner"></div>
+                    <div className="banner"><img src={fish} alt="" /></div>
 
                     <div className="blockes_container">
                         <div className="blockes_info">
@@ -255,17 +310,17 @@ const IntegrationFrame = () => {
                     <div className="playBar_container">
                         <div className="control_container">
                             <div className="progression">
-                                <span>0:43</span>
+                                <span>{formatTime(musicDuration)}</span>
                                 <input type="range" className='volumn_adjust' min={0} max={100} value={frameTime} onChange={changeFrameTime_f} style={{
                                     background: `linear-gradient(to right, white ${frameTime}%, #ffffff37 ${frameTime}%)`,
                                 }} />
-                                <span>2:42</span>
+                                <span>{formatTime(musicLong)}</span>
                             </div>
                             <div className="control_bar">
 
                                 <div className="controls">
                                     <div className='icon'><FontAwesomeIcon icon={faBackwardStep} /></div>
-                                    {!playBtn ? <div className='icon' onClick={() => { playBtnStatus(); playMusic() }} ><FontAwesomeIcon icon={faPlay} /></div> : <div className='icon' onClick={()=>{playBtnStatus() ; pauseMusic()}}><FontAwesomeIcon icon={faPause} /></div>}
+                                    {!playBtn ? <div className='icon' onClick={() => { playBtnStatus(); playMusic() }} ><FontAwesomeIcon icon={faPlay} /></div> : <div className='icon' onClick={() => { playBtnStatus(); pauseMusic() }}><FontAwesomeIcon icon={faPause} /></div>}
 
                                     <div className='icon'><FontAwesomeIcon icon={faForwardStep} /></div>
                                 </div>
@@ -286,8 +341,19 @@ const IntegrationFrame = () => {
             </div>
 
 
-            <audio ref={audioMusic}>
-                <source src={testmusic} type="audio/ogg" />
+            <audio ref={audioMusic}
+                onLoadedMetadata={() => {
+                    if (audioMusic.current) {
+                        setmusicLong(audioMusic.current.duration)
+                    }
+                }}
+                onTimeUpdate={handleMusicDuration}
+            >
+
+                <source
+                    src={testmusic}
+                    type="audio/ogg" />
+
             </audio>
 
         </div>
