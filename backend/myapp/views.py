@@ -7,25 +7,7 @@ from . models import *
 from rest_framework.response import Response
 from . serializer import *
 import json
-
-def send_email(receive_email,receiver_name):
-    smtp = smtplib.SMTP('smtp.gmail.com', 587)
-    smtp.ehlo()
-    smtp.starttls()
-    smtp.login("systemyuntech@gmail.com" , "skyt mtvr mcxm kuai")
-    my_email = "systemyuntech@gmail.com"
-    receiver = receive_email
-    verify_code = produce_randomcode()
-    masage =f"Subject:YuntechSystem 驗證碼\n{receiver_name}您的驗證碼為：{verify_code}"
-    status = smtp.sendmail(my_email,receiver,masage.encode('utf-8'))
-    smtp.quit()
-    return verify_code
-
-def produce_randomcode():
-    global code
-    code =  random.randint(1000,9999)
-    return code
-
+#------------------------------------------------------------------
 def produce_randomRecommand(request):
     musics_id = Music.objects.values_list('music_ID',flat=True)  # id list -- music
     films_id = Film.objects.values_list('film_ID',flat=True)  # id list -- film
@@ -54,7 +36,7 @@ def produce_randomRecommand(request):
         'film_locations' : film_random_list
     }
     return JsonResponse(recommand_json , safe=False)
-
+#------------------------------------------------------------------
 class ReactView(APIView):
     def get(self, request):
         output = [{
@@ -72,7 +54,7 @@ class ReactView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-
+#------------------------------------------------------------------
 def login(request):
     # print("g")
     if request.method=="POST":
@@ -98,56 +80,117 @@ def login(request):
             return JsonResponse(user_json , safe=False)
         elif data['logStatus'] == "regist":
             cUser_Name = data['userCreateName']
-            cUser_Account = data['userCreateAccount']
-            cUser_Password  = data['userCreatePasswrod']
             cUser_Email = data['userCreateEmail']
-            add_user = User.objects.create(
-            user_Name = cUser_Name,
-            user_Email = cUser_Email,
-            user_Account = cUser_Account,
-            user_Password = cUser_Password
-            )
-            add_user.save()
-            return HttpResponse("success" , status = '200')
+            verify_code = send_email(cUser_Email , cUser_Name)
+            verify_json  = {
+                'verify_code': verify_code,
+                'user_name':cUser_Name,
+                'user_email':cUser_Email
+            }
+            # cUser_Account = data['userCreateAccount']
+            # cUser_Password  = data['userCreatePasswrod']
+            # add_user = User.objects.create(
+            # user_Name = cUser_Name,
+            # user_Email = cUser_Email,
+            # user_Account = cUser_Account,
+            # user_Password = cUser_Password
+            # )
+            # add_user.save()
+            return JsonResponse(verify_json,safe=False)
+#------------------------------------------------------------------
+def send_email(receive_email,receiver_name):
+    smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login("systemyuntech@gmail.com" , "skyt mtvr mcxm kuai")
+    my_email = "systemyuntech@gmail.com"
+    receiver = receive_email
+    verify_code = produce_randomcode()
+    masage =f"Subject:YuntechSystem 驗證碼\n{receiver_name}您的驗證碼為：{verify_code}"
+    status = smtp.sendmail(my_email,receiver,masage.encode('utf-8'))
+    smtp.quit()
+    return verify_code
 
-def verify_email(request):
-    if request.method =="POST":
-        data =  json.loads(request.body.decode('utf-8'))
-        email = data['userEmail']
-        name = data['userName']
-        send_email(email,name)
-        verify_code  = send_email(email, name)
-        code_json = {
-            'verify_code' :verify_code,
-        }    
-        return JsonResponse(code_json,safe=False)
+def produce_randomcode():
+    global code
+    code =  random.randint(1000,9999)
+    return code
+
+# def verify_email(request):
+#     if request.method =="POST":
+#         data =  json.loads(request.body.decode('utf-8'))
+#         email = data['userEmail']
+#         name = data['userName']
+#         send_email(email,name)
+#         verify_code  = send_email(email, name)
+#         code_json = {
+#             'verify_code' :verify_code,
+#         }    
+#         return JsonResponse(code_json,safe=False)
 
 def verify_success(request):
     data =  json.loads(request.body.decode('utf-8'))
-    userName = data['userName']
-    userEmail = data['userEmail']
-    user = User.objects.get(user_Name = userName)
-    user.user_Email = userEmail
+    userName = data['userCreateName']
+    userEmail = data['userCreateEmail']
+    userAccount = data['userCreateAccount']
+    userPassword = data['userCreatePassword']
+    user = User.objects.create(
+        user_Name = userName,
+        user_Email = userEmail,
+        user_Account = userAccount,
+        user_Password = userPassword
+        )
     user.save()
-    return HttpResponse('success' , status = '200')
-
-def edit_request(request):
-    if request.method =="POST":
-        re_user = json.loads(request.body.decode('utf-8'))
-        user = re_user['RequestUser']
-        user_data = User.objects.get(user_ID= user)
-        re_json = {
-            'User_name':user_data.user_Name,
-            'User_Email':user_data.user_Email,
-            'User_Image_location':user_data.user_Image
-        }
-    return JsonResponse(re_json ,safe= False )
+    user_json = {
+        'userName':userName,
+        'userEmail':userEmail
+    }
+    return JsonResponse(user_json , safe=False)
+#------------------------------------------------------------------
+# def edit_request(request):
+#     if request.method =="POST":
+#         re_user = json.loads(request.body.decode('utf-8'))
+#         user = re_user['RequestUser']
+#         user_data = User.objects.get(user_ID= user)
+#         re_json = {
+#             'Origin_User_name':user_data.user_Name,
+#             'User_Image_location':user_data.user_Image
+#         }
+#     return JsonResponse(re_json ,safe= False )
 
 def edit_user_information(request):
     if request.method=="POST":
         edit_data = json.loads(request.body.decode('utf-8'))
+        Origin_User = edit_data['originUserName']
         Edit_user = edit_data['editUserName']
-        Edit_Email = edit_data['editUserEmail']
+        Edit_Image = edit_data['editUserImage']
+        User_Info = User.objects.get(user_Name = Origin_User)
+        User_Info.user_Name = Edit_user
+        User_Info.user_Image = Edit_Image
+        New_user = {
+            'user_name' : Edit_user,
+            'user_Image': Edit_Image
+        }
+        return JsonResponse(New_user , safe=False)
+#------------------------------------------------------------------
+def search(request):
+    # if request.method =="POST":
+        # key_words = json.loads(request.body.decode('utf-8'))
+        # keyword = key_words['keyword']
+    keyword = 'Dexter'
+    music_search_final=[]
+    users_list = []
+    Users = User.objects.filter(user_Name__contains=keyword).values_list('user_Name' , flat=True)
+    print(Users)
+    for user in Users:
+        users_list.append(user)
+    user_list = {
+        'userList':users_list   
+    }
+    print(user_list)
+    # return JsonResponse(user_list , safe=False)
+    return HttpResponse('132123')
+        
 
 
 

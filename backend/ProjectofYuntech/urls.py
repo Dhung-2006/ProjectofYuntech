@@ -25,7 +25,9 @@ urlpatterns = [
     path('',ReactView.as_view() ),
     path('login' , login , name="login"),
     path('recommand' , produce_randomRecommand ,name = 'recommand'),
-    path('editRequest',edit_request,name="editRequest"),
-    path('requestEmail' , verify_email, name='requestEmail'),
-    path('requestEmail/verifySuccess' , verify_success , name='verifySuccess'),
+    # path('requestEmail' , verify_email, name='requestEmail'),
+    path('verifySuccess' , verify_success , name='verifySuccess'),
+    # path('editUserInfo' , edit_request , name='editUserInfo'),
+    path('editSuccess' , edit_user_information , name= 'editsucess'),
+    path('search' , search , name='search')
 ]           
