@@ -129,7 +129,7 @@ body {
     user-select: none;
 }
 
-.integrationFrame {
+.EbookFrame {
     position: relative;
     display: flex;
     align-items: center;
@@ -385,8 +385,7 @@ body {
                         &:hover {
                             .hidden_item {
                                 opacity: 1;
-                                transform: translate(0%, 120%);
-                                scale: 0.8;
+                                transform: translate(0%, 100%);
                             }
                         }
 
@@ -413,14 +412,14 @@ body {
                                     opacity: 0.5;
                                 }
 
-                                // &:nth-child(2) {
-                                //     background-color:#09B96D;
-                                // }
+                                &:nth-child(2) {
+                                    background-color: rgb(41, 179, 41);
+                                }
 
-                                // &:nth-child(1) {
+                                &:nth-child(1) {
 
-                                //     background-color:#e1551d;
-                                // }
+                                    background-color: red;
+                                }
                             }
                         }
                     }
@@ -574,10 +573,9 @@ body {
                         // overflow: hidden;
                         transition: .25s;
 
-                        &:hover .absolute_con {
+                        &:hover .absolute_con{
                             opacity: 0.5;
                         }
-
                         &:hover .hoverPlay {
                             opacity: 1;
                             right: 5%;
@@ -612,20 +610,19 @@ body {
                             }
                         }
 
-                        .black_drop {
+                        .black_drop{
                             position: absolute;
                             top: 0;
                             left: 0;
                             height: 100%;
                             width: 100%;
-                            background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+                            background: linear-gradient(transparent, rgba(0,0,0,0.75));
                             transition: .25s;
                             border-radius: 25px;
                         }
-
                         .absolute_con {
                             position: absolute;
-                            bottom: 5%;
+                            bottom:5%;
                             left: 2%;
                             width: 100%;
                             transition: .25s;
@@ -928,335 +925,9 @@ body {
 
     }
 
-    .login_frame {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        height: 100vh;
-        width: 100%;
-        background-color: #252525c9;
-        backdrop-filter: blur(5px);
-        transition: .5s;
-
-        .login_container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            // height: 35rem;
-            // aspect-ratio: 0.45 / 0.55;
-            width: 26rem;
-            // background-color: rgba(255, 255, 255, 0.313);
-            background: linear-gradient(240deg, rgba(86, 13, 122, 1) 0%, rgba(114, 56, 137, 1) 46%, rgba(170, 66, 140, 1) 100%);
-            font-family: f1;
-            border-radius: 20px;
-            transition: .5s;
-            padding: 3rem 5rem;
-
-            .close {
-                position: absolute;
-                top: 5%;
-                right: 6%;
-                font-size: 1.5rem;
-                color: white;
-                transition: .25s;
-                cursor: pointer;
-
-                &:hover {
-                    opacity: 0.5;
-                }
-            }
-
-            .logo {
-                font-size: 2.15rem;
-                font-weight: bold;
-
-            }
-
-            .log_reg {
-                @include all-center;
-                margin: 2rem 0 1.5rem 0;
-
-                .log_btn_click {
-                    background-color: white !important;
-                    color: #e1551d !important;
-                }
-
-                .log_btn_click_2 {
-                    background-color: white !important;
-                    color: #09B96D !important;
-                }
-
-                .log_btn {
-                    position: relative;
-                    margin: 0 1.5rem;
-                    cursor: pointer;
-                    font-size: 1.17rem;
-                    transition: .25s;
-                    background-color: #fe4a222c;
-                    color: #e1551d;
-                    padding: 0.5rem 1.5rem;
-                    border-radius: 15px;
-
-                    &:nth-child(2) {
-                        background-color: #09b96d40;
-                        color: #09B96D;
-                    }
-
-                    // &::after {
-                    //     content: "";
-                    //     position: absolute;
-                    //     left: 50%;
-                    //     bottom: -20%;
-                    //     transform: translate(-50%, 0);
-                    //     height: 2px;
-                    //     width: 20px;
-                    //     background-color: rgb(157, 61, 205);
-                    //     transition: .25s;
-                    //     opacity: 0;
-                    // }
-
-                    // &.clicked::after {
-                    //     opacity: 1;
-                    // }
-                    // &:hover::after {
-                    //     opacity: 1;
-                    // }
-
-                    &:hover {
-                        opacity: 0.5;
-                    }
-
-                }
-            }
-
-
-
-            .fadeInout {
-                position: relative;
-                transition: .5s;
-                width: 100%;
-
-                &.op0 {
-                    opacity: 0;
-                    visibility: hidden;
-                    display: none;
-                    pointer-events: none;
-                }
-
-                .frame_overflow {
-                    display: flex;
-                    flex-direction: column;
-                    // align-items: center;
-                    height: 25rem;
-                    width: 100%;
-                    // background-color: black;
-                    padding: 0.25rem 2rem;
-                    margin: 1rem 0;
-                    overflow-y: scroll;
-
-                    .song_info {
-                        display: flex;
-                        align-items: center;
-                        margin: 0.5rem 0;
-
-                        .song_img img {
-                            height: 4.5rem;
-                            aspect-ratio: 1/1;
-                            border-radius: 12px;
-                            margin-right: 2rem;
-                        }
-
-                        .song_detail {
-                            margin-right: 2rem;
-
-                            h3 {}
-
-                            h3,
-                            h4 {
-                                margin: 0;
-                            }
-                        }
-
-                        .songType {
-                            padding: 0.25rem 1.2rem;
-                            background-color: rgb(154, 69, 188);
-                            border-radius: 25px;
-                            margin-right: 2.5rem
-                        }
-
-                        .delete {
-                            @include all-center;
-                            height: 2.5rem;
-                            aspect-ratio: 1/1;
-                            background-color: #e1551d;
-                            border-radius: 50%;
-                            transition: .25s;
-                            cursor: pointer;
-
-                            &:hover {
-                                background-color: white;
-                                color: #e1551d;
-                            }
-                        }
-                    }
-                }
-
-
-
-                .signInBtns {
-                    position: relative;
-                    display: flex;
-                    // flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 1.5rem;
-
-                    .signInBtn {
-                        display: flex;
-                        align-content: center;
-                        justify-content: center;
-                        font-family: f1;
-                        padding: 0.85rem 3rem;
-                        width: 100%;
-                        border-radius: 25px;
-                        // background-color: rgba(255, 255, 255, 0.429);
-                        background: transparent;
-                        font-size: 1rem;
-                        border: none;
-                        color: white;
-                        transition: .25s;
-                        cursor: pointer;
-                        margin: 0 0.5rem;
-
-
-                        &:nth-child(2) {
-                            // opacity: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-
-                            color: white;
-                            background-color: rgb(157, 61, 205);
-                            margin: 0.2rem 0;
-
-                        }
-
-                        &:hover {
-                            opacity: 0.6;
-                        }
-                    }
-                }
-            }
-
-        }
-
-        .addSongFrame {
-
-            // left: 0;
-            @include all-center();
-            flex-direction: column;
-            position: absolute;
-            width: 50rem;
-            padding: 6rem 2rem;
-            border-radius: 25px;
-            background-color: #252525;
-            transition: .25s;
-            // background:linear-gradient(180deg, rgba(86, 13, 122, 1) 0%, rgba(114, 56, 137, 1) 46%, rgba(170, 66, 140, 1) 100%);
-
-            .FrameContainer {
-
-                position: relative;
-                width: 100%;
-                margin-bottom: 3rem;
-                @include all-center();
-
-                .inner {
-                    @include all-center();
-                    width: 50%;
-                    flex-direction: column;
-
-                    // h3,h4{
-                    //     margin: 0;
-                    // }
-                    &:nth-child(1) {
-                        h3 {
-                            margin: 1rem 0 0.5rem 0;
-                        }
-
-                        h4 {
-                            margin: 0;
-                        }
-                    }
-
-                    .addSongImg {
-                        @include all-center();
-                        position:relative;
-                        height: 15rem;
-                        font-size: 3rem;
-                        aspect-ratio: 1/1;
-                        border-radius: 12px;
-                        background-color: rgba(255, 255, 255, 0.315);
-                        
-                        overflow: hidden;
-                        &::before{
-                            content: '上傳圖片';
-                            @include all-center();
-                            position:absolute;
-                            bottom: 0;
-                            left: 0;
-                            height: 0%;
-                            width: 100%;
-                            transition: .35s;
-                            font-size: 1.5rem;
-                            opacity: 0;
-                            background-color:rgb(141, 36, 194);
-                            cursor: pointer;
-                        }
-                        &:hover::before{
-                            opacity: 1;
-                            height: 100%;
-                        }
-                    }
-
-                    input,
-                    textarea {
-                        padding: 0.5rem 4rem 0.5rem 1rem;
-                        border-radius: 12px;
-                    }
-                }
-            }
-
-            .frameBtns {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 80%;
-
-                .frameBtn {
-                    padding: 0.85rem 4rem;
-                    background-color: rgb(143, 71, 179);
-                    border-radius: 25px;
-                    margin: 0 1rem;
-                    transition: .25s;
-                    cursor: pointer;
-
-                    &:hover {
-                        background-color: white;
-                        color: rgb(143, 71, 179);
-                    }
-                }
-            }
-        }
-
-    }
 
 
 }
-
-
 
 @keyframes slideDown {
     0% {
@@ -1286,51 +957,5 @@ body {
     100% {
         opacity: 1;
         transform: translate(0);
-    }
-}
-
-@keyframes shake {
-    0% {
-        transform: translate(1px, 1px) rotate(0deg);
-    }
-
-    10% {
-        transform: translate(-1px, -2px) rotate(-1deg);
-    }
-
-    20% {
-        transform: translate(-3px, 0px) rotate(1deg);
-    }
-
-    30% {
-        transform: translate(3px, 2px) rotate(0deg);
-    }
-
-    40% {
-        transform: translate(1px, -1px) rotate(1deg);
-    }
-
-    50% {
-        transform: translate(-1px, 2px) rotate(-1deg);
-    }
-
-    60% {
-        transform: translate(-3px, 1px) rotate(0deg);
-    }
-
-    70% {
-        transform: translate(3px, 1px) rotate(-1deg);
-    }
-
-    80% {
-        transform: translate(-1px, -1px) rotate(1deg);
-    }
-
-    90% {
-        transform: translate(1px, 2px) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(1px, -2px) rotate(-1deg);
     }
 }

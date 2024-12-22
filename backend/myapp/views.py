@@ -33,27 +33,27 @@ def produce_randomRecommand(request):
     films_id = Film.objects.values_list('film_ID',flat=True)  # id list -- film
     music_random_list = []
     counter_music = 0 
-    while len(music_random_list) < 10 :
-        print(1)
-        random_id =  random.randint(0,len(musics_id)-1)
-        music = Music.objects.get(music_ID = musics_id[random_id])
-        music_location = music.music_Location
-        if music_location not in music_random_list:
-            music_random_list.append(music_location)
-            counter_music +=1
-    film_random_list = []
-    counter_film = 0
-    while len(film_random_list) <10:
-        print(1)
-        random_id = random.randint(0,len(films_id)-1)
-        film = Film.objects.get(film_ID = films_id[random_id])
-        film_location = film.film_Location
-        if film_location not in film_random_list:
-            film_random_list.append(film_location)
-            counter_film +=1
+    # while len(music_random_list) < 10 :
+    #     print(1)
+    #     random_id =  random.randint(0,len(musics_id)-1)
+    #     music = Music.objects.get(music_ID = musics_id[random_id])
+    #     music_location = music.music_Location
+    #     if music_location not in music_random_list:
+    #         music_random_list.append(music_location)
+    #         counter_music +=1
+    # film_random_list = []
+    # counter_film = 0
+    # while len(film_random_list) <10:
+    #     print(1)
+    #     random_id = random.randint(0,len(films_id)-1)
+    #     film = Film.objects.get(film_ID = films_id[random_id])
+    #     film_location = film.film_Location
+    #     if film_location not in film_random_list:
+    #         film_random_list.append(film_location)
+    #         counter_film +=1
     recommand_json = {
-        'music_locations' : music_random_list,
-        'film_locations' : film_random_list
+        'music_locations' :123, #music_random_list,
+        'film_locations' : 123456#film_random_list
     }
     return JsonResponse(recommand_json , safe=False)
 
@@ -113,9 +113,9 @@ def login(request):
 def regist_account(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
-        cUser_Name = data['userCreateName']
+        cUser_Name = data['userCreateAccount']
         cUser_Account = data['userCreateAccount']
-        cUser_Password  = data['userCreatePasswrod']
+        cUser_Password  = data['userCreatePassword']
         cUser_Email = data['userCreateEmail']
         add_user = User.objects.create(
             user_Name = cUser_Name,
