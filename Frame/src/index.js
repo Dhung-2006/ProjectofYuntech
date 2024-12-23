@@ -5,8 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route , Routes} from 'react-router-dom';
 // frames
-import MainFrame from './frames/MainFrame'
-import YoutubeFrame from './frames/YoutubeFrame'
+import MainFrame from './frames/MainFrame';
+import IntegrationFrame from './frames/IntegrationFrame';
+import VideoFrame from './frames/VideoFrame';
+import EbookFrame from './frames/EbookFrame';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +18,9 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<MainFrame />} />
-      <Route path='/YtFrame' element={<YoutubeFrame />} />
+      <Route path='/frame_2' element={<IntegrationFrame />} />
+      <Route path='/VideoFrame' element={<VideoFrame />} />
+      <Route path='/EbookFrame' element={<EbookFrame />} />
       
     </Routes>
   </BrowserRouter>

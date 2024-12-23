@@ -19,15 +19,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path , include
 from myapp.views import *
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',ReactView.as_view() ),
     path('login' , login , name="login"),
-    path('recommand' , produce_randomRecommand ,name = 'recommand'),
+    path('all' , start_view ,name = 'all'),
+    path('all/music' , get_music , name='all_music'),
+    path("all/film", get_film, name="all_film"),
+    path("all/book",get_ebook, name="all_Ebook"),
     # path('requestEmail' , verify_email, name='requestEmail'),
     path('verifySuccess' , verify_success , name='verifySuccess'),
     # path('editUserInfo' , edit_request , name='editUserInfo'),
     path('editSuccess' , edit_user_information , name= 'editsucess'),
-    path('search' , search , name='search')
+    path('search' , search , name='search'),
+    path('userInformation', user_information , name='userInformation'),
+    # path('test', test , name = 'test'),
+    path('recommand' , recommand , name='recommand'),
+    path('recommand/image' , recommand_image , name='recommandImage'),
+    path('delete' , deleteData , name='delete'),
+
 ]           
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)

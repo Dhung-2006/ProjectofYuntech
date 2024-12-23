@@ -5,18 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import '../sass/output.css'
 import image from "../images/seeThat.jpg"
 import testmusic from "../video/1.mp3";
-// import ania from "../../public/ania.mov";
 import fish from "../images/fish.jpg";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faPause, faForwardStep, faUser, faBackwardStep, faVolumeLow, faPlay, faBook, faMusic, faVideo, faUpRightFromSquare, faCircleHalfStroke, faEllipsis, faPlus, faTrash, faGear, faXmark, faG, faAdd, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPause, faForwardStep, faBackwardStep, faVolumeLow, faPlay, faBook, faMusic, faVideo, faUpRightFromSquare, faEllipsis, faPlus, faTrash, faGear } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 
-const IntegrationFrame = () => {
+const EbookFrame = () => {
     const navigate = useNavigate()
 
     // class
@@ -27,57 +26,20 @@ const IntegrationFrame = () => {
     const [playBtn, setPlayBtn] = useState(false);
     const [volumn, setVolumn] = useState(75);
 
-    const [loginFrameStatus, setLoginFrameStatus] = useState(0);  // 登入畫面
-    const [loginFrame, setLoginFrame] = useState(0); // 登入框
-
-    // delete & create
-    const [deleteBtn, setDeleteBtn] = useState(0);
-    const [createBtn, setCreateBtn] = useState(0);
-
-
     // music
     const [frameTime, setFrameTime] = useState(0); // 時間(軸)
     const [musicLong, setmusicLong] = useState(0);  // 總長
     const [musicDuration, setmusicDuration] = useState(0);  // 時長
     const audioMusic = useRef(null);
     const [musicFrame, setMusicFrame] = useState(false);
-    const [songInfo, setSongInfo] = useState({ songName: "Luther (with sza)", songAuthor: "Allen Huang", songImgRoute: fish });
+    const [songInfo, setSongInfo] = useState({songName:"Luther (with sza)",songAuthor:"Kendrick Lanmar",songImgRoute:"sdf"});
 
     // form 
-    // form 
-    const [loginData, setLoginData] = useState({
-
-        userAccount: "", // 帳號
-        userPassword: "", //密碼
-
-        // // // // // // // // // // // // // // // // 
-
-        userCreateAccount: "", // 創建帳號
-        userCreateEmail: "", // Email
-        userCreatePassword: "", // 創建密碼
-        userCreatePassword_c: "",  // 創建密碼(確定)
-
-        // // // // // // // // // // // // // // // // 
-
-        logStatus: ""
-
-    })
+    const [loginData, setLoginData] = useState({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "", logStatus: "" })
     const URL = "http://localhost:8000/login";
     const userName = "Allenhnn_";
 
-    // verify
-    const [VerifyFrameStatus, setVerifyFrameStatus] = useState(0); // 驗證框
-    const verify = () => {
-        if (loginStatus == 0) {
-            return false;
-        }
-        else if (loginStatus == 1) {
-            return true;
-        }
-    }
-
-
-
+    
     // cookie
     const cookie = Cookies.get("csrftoken");
     // const csrftoken ="DyN0BqI3CN2YNAD9LMwkIrPP6V0PNtiJ";
@@ -218,7 +180,7 @@ const IntegrationFrame = () => {
         return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     };
 
-    const ClearInputValue = () => {
+    const ClearInputValue = ()=>{
         setMusicFrame(false);
         setFrameTime(0);
         setmusicDuration(0);
@@ -240,7 +202,7 @@ const IntegrationFrame = () => {
 
     // render
     return (
-        <div className="integrationFrame">
+        <div className="EbookFrame">
             <div className={`loader_outer ${opN}`} >
                 <div className="loader"></div>
             </div>
@@ -264,15 +226,15 @@ const IntegrationFrame = () => {
                         <FontAwesomeIcon icon={faHouse} />
                         <h4>主頁</h4>
                     </div>
-                    <div onClick={() => navigate("/videoFrame")} >
+                    <div onClick={() => navigate("/frame_2")}>
                         <FontAwesomeIcon icon={faVideo} />
                         <h4>影片</h4>
                     </div>
-                    <div className="bgP">
+                    <div onClick={() => navigate("/frame_2")}>
                         <FontAwesomeIcon icon={faMusic} />
                         <h4>音樂</h4>
                     </div>
-                    <div onClick={() => navigate("/EbookFrame")}>
+                    <div className="bgP">
                         <FontAwesomeIcon icon={faBook} />
                         <h4>電子書</h4>
                     </div>
@@ -305,8 +267,8 @@ const IntegrationFrame = () => {
                         <div className="userFunc">
                             <div className="moreBtn"><FontAwesomeIcon icon={faEllipsis} />
                                 <div className="hidden_item">
-                                    <div onClick={() => setLoginFrameStatus(1)} ><FontAwesomeIcon icon={faUser} /></div>
-                                    <div onClick={() => setLoginFrameStatus(1)} ><FontAwesomeIcon icon={faCircleHalfStroke} /></div>
+                                    <div><FontAwesomeIcon icon={faTrash} /></div>
+                                    <div><FontAwesomeIcon icon={faPlus} /></div>
                                 </div>
 
                             </div>
@@ -323,15 +285,15 @@ const IntegrationFrame = () => {
 
                     <div className="blockes_container">
                         <div className="blockes_info">
-                            <h1>您獨特的音樂品味</h1>
+                            <h1>經典電子書</h1>
                         </div>
                         <div className="blockes_outer_container">
                             <div className="blockes_outer_container">
                                 {Array.from({ length: 8 }).map((_, i) => (
-                                    <div className="block_outer" key={i} onClick={() => { setMusicFrame(true); setSongInfo({ songName: "SigmaBoi (with sza)", songAuthor: "Kendrick Lanmar", songImgRoute: { image } }) }}>
+                                    <div className="block_outer" key={i} onClick={() => setMusicFrame(true)}>
                                         <div className="black_drop"></div>
                                         <div className="block_img"><img src={`${fish}`} alt="" /></div>
-                                        <div className="hoverPlay"><FontAwesomeIcon icon={faPlay} /></div>
+                                            <div className="hoverPlay"><FontAwesomeIcon icon={faPlay} /></div>
                                         <div className="absolute_con">
                                             <div className="texts">
                                                 <h3>Songname</h3>
@@ -348,11 +310,11 @@ const IntegrationFrame = () => {
             </div>
 
 
-            <div className={`full_music ${!musicFrame ? "slideDown" : "slideUp"}`} style={{ background: `url(${songInfo.songImgRoute}) center center` }}>
+            <div className={`full_music ${!musicFrame ? "slideDown" : "slideUp"}`} style={{ background: `url(${image}) center center` }}>
                 <div className="cls" onClick={ClearInputValue}><FontAwesomeIcon icon={faUpRightFromSquare} /></div>
                 <div className="black_cover" />
                 <div className="music_intro">
-                    <div className="music_img" style={{ background: `url(${songInfo.songImgRoute}) center center` }} />
+                    <div className="music_img" style={{ background: `url(${image}) center center` }} />
                     <div className="music_text">
                         <h1>{songInfo.songName}</h1>
                         <h3>{songInfo.songAuthor}</h3>
@@ -408,121 +370,6 @@ const IntegrationFrame = () => {
 
             </audio>
 
-            {/* /////////////////////////////////////////////////////////////////////////// */}
-
-            <div className={`login_frame ${loginFrameStatus === 0 ? "opNone" : ""}`} >
-                <div className='login_container' >
-
-                    <div className="logo">會員管理系統</div>
-                    <div className='log_reg'>
-                        <div className={`log_btn ${deleteBtn ? "log_btn_click" : ""} ${loginFrame === 1 ? "clicked" : ""}`} onClick={deleteBtn ? () => setDeleteBtn(0) : () => setDeleteBtn(1)} >刪除 <FontAwesomeIcon icon={faTrash} style={{ marginLeft: "0.65rem" }} /> </div>
-                        <div className={`log_btn ${createBtn ? "log_btn_click_2" : ""} ${loginFrame !== 1 ? "clicked" : ""}`} onClick={createBtn ? () => setCreateBtn(0) : () => setCreateBtn(1)}>新增 <FontAwesomeIcon icon={faPlus} style={{ marginLeft: "0.65rem" }} /></div>
-                    </div>
-                    <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={(event) => formSubmit("sign", event)}>
-                        <div className='user_data'>
-                            <input type="text" name='userAccount' value={loginData.userAccount} placeholder='帳號' onChange={inputChange} />
-                            <input type="password" name='userPassword' value={loginData.userPassword} placeholder='密碼' onChange={inputChange} />
-                        </div>
-                        <div className='signInBtns'>
-                            <button type='submit' className='signInBtn'>登入</button>
-                            <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div>
-                        </div>
-                    </form>
-                    <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`}
-                        onSubmit={
-                            event => {
-                                formSubmit("regist", event);
-                                setVerifyFrameStatus(1);
-                            }}>
-                        <div className="frame_overflow">
-
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">音樂</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">影片</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">電子書</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">音樂</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-
-
-
-                        </div>
-
-                        <div className='signInBtns'>
-                            <button type='submit' className='signInBtn' onClick={() => setLoginFrameStatus(0)}>取消</button>
-                            <button type='submit' className='signInBtn' >更新</button>
-                        </div>
-
-
-
-                    </form>
-
-
-                    <div className={`addSongFrame ${!createBtn?"opNone":""}`}>
-                        {/* 照片 */}
-                        <div className="FrameContainer">
-                            <div className="inner">
-                                <div className="addSongImg">
-                                    <FontAwesomeIcon icon={faImage} />
-                                </div>
-                                <h3>上傳照片</h3>
-                                <h4>上傳可以清楚表達內容的圖片</h4>
-                            </div>
-                            <div className="inner">
-                                {/* 標題 */}
-                                <div>
-                                    <h3>標題</h3>
-                                    <input type="text" />
-                                </div>
-                                {/* 作者 */}
-                                <div>
-                                    <h3>作者</h3>
-                                    <input type="text" />
-                                </div>
-                                {/* 內文 */}
-                                <div>
-                                    <h3>內容</h3>
-                                    <textarea type="textarea" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="frameBtns">
-                            <div className="frameBtn" onClick={()=>setCreateBtn(0)}>取消</div>
-                            <div className="frameBtn" onClick={()=>setCreateBtn(0)}>送出</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* <video src="/ania.mov" controls></video> */}
         </div>
 
 
@@ -531,4 +378,4 @@ const IntegrationFrame = () => {
     // npm start
     // sass xx.scss output.css
 }
-export default IntegrationFrame;
+export default EbookFrame;

@@ -33,8 +33,9 @@ class Film(models.Model):
 class Ebook(models.Model):
     book_ID = models.IntegerField(primary_key=True,editable= False , unique=True )
     user_ID = models.IntegerField()
-    book_Name = models.CharField(max_length=50 , unique= True , default="type your film name here")
-    book_Content = models.CharField(max_length= 2000, blank=True )
-    bood_Image = models.CharField(max_length=50  , default="defaultImage")
+    book_Name = models.CharField(max_length=50 , unique= True , default="type your book name here")
+    book_Intro = models.TextField(blank=True)
+    book_Location = models.CharField(max_length=50 , unique= True , default="type your book location name here")
+    book_Image = models.CharField(max_length=50  , default="defaultImage")
     def __str__(self):
-        return self.book_Name
+        return self.book_Name 
