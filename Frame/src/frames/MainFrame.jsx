@@ -83,40 +83,49 @@ const MainFrame = () => {
     }
     // console.log(cookie)
 
-    const formSubmit = (arg) => async (e) => {
-        setLoginData((prevData) => ({"logStatus":arg}))
-        e.preventDefault();
-        console.log("loginData",JSON.stringify(loginData))
-        const POSTdata = JSON.stringify(loginData);
-        try {
-            const response = await axios.post(URL, POSTdata, {
-                headers: {
-                    "Content-Type": "application/json",
-                    'X-CSRFToken': cookie
-                },
-                withCredentials: true 
-            });
-        } catch (error) {
-            console.error("Error:", error);
-        }
-        // setLoginData({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" , logStatus : ""})
+    const formSubmit = async (arg, event) => {
+        event.preventDefault();
+        setLoginData((prevData) => ({ ...prevData, "logStatus": arg }));
     };
-    // const formSubmit = async (e) => {
-    //     console.log(e)
-    //     e.preventDefault();
-    //     try {
-    //         const response = await axios.post(URL, loginData, {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'X-CSRFToken': cookie
-    //             },
-    //             withCredentials: true 
-    //         });
-    //     } catch (error) {
-    //         console.error("Error:", error);
-    //     }
-    // };
+    const handleSubmit = () => {
+        if (loginData.logStatus) {
+            console.log(loginData.logStatus);
+            console.log("loginData", loginData)
 
+            console.log("loginData", JSON.stringify(loginData));
+            const POSTdata = JSON.stringify(loginData);
+            try {
+                const response = axios.post(URL, POSTdata, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        'X-CSRFToken': cookie
+                    },
+                    withCredentials: true
+                });
+
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            setLoginData({
+
+                userAccount: "", // 帳號
+                userPassword: "", //密碼
+        
+                // // // // // // // // // // // // // // // // 
+        
+                userCreateAccount: "", // 創建帳號
+                userCreateEmail: "", // Email
+                userCreatePassword: "", // 創建密碼
+                userCreatePassword_c: "",  // 創建密碼(確定)
+        
+                // // // // // // // // // // // // // // // // 
+        
+                logStatus: ""
+        
+            })
+        }
+    }
 
     // events
     const changeVolumn = e => {
@@ -414,8 +423,8 @@ const MainFrame = () => {
                     </div>
                     <form id='login_form' action='' className={`fadeInout ${loginFrame === 0 ? "op0" : ""}`} onSubmit={(event) => formSubmit("sign", event)}>
                         <div className='user_data'>
-                            <input type="text" name='userAccount' value={loginData.account} placeholder='使用者名稱' onChange={inputChange} required/>
-                            <input type="password" name='userPassword' value={loginData.password} placeholder='密碼' onChange={inputChange} required/>
+                            <input type="text" name='userAccount' value={loginData.userAccount} placeholder='帳號' onChange={inputChange} />
+                            <input type="password" name='userPassword' value={loginData.userPassword} placeholder='密碼' onChange={inputChange} />
                         </div>
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn'>登入</button>
