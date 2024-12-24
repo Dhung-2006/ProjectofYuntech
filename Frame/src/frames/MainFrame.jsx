@@ -197,10 +197,6 @@ const MainFrame = () => {
     }, [loginData.logStatus])
 
 
-    // const limitString = e =>{
-    //     if(e.)
-    // }
-
     return (
         <div className="mainFrame">
             <nav id='FrameNavbar'>
@@ -428,7 +424,7 @@ const MainFrame = () => {
                         </div>
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn'>登入</button>
-                            <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div>
+                            {/* <div className='signInBtn'><FontAwesomeIcon icon={faG} style={{ marginRight: "1rem" }} /> 使用 Google 登入  </div> */}
                         </div>
                     </form>
                     <form id='regist_form' action='' className={`fadeInout ${loginFrame === 1 ? "op0" : ""}`}
@@ -454,7 +450,7 @@ const MainFrame = () => {
                     <form className={`verify_frame ${!VerifyFrameStatus ? "opNone" : ""}`}>
                         <div className="title">
                             <h1>驗證碼認證</h1>
-                            <p>我們傳送驗證碼至 <span>allenhuang95710@gmail.com</span></p>
+                            {/* <p>我們傳送驗證碼至 <span>{loginData.userCreateEmail}</span></p> */}
                         </div>
                         <div className="codes">
                             {/* <input type="number" name="input_1" min={1} max={9} pattern={[1-9]} required/> */}

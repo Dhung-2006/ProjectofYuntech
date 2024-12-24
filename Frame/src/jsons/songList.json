@@ -1,0 +1,56 @@
+[
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/Dazzling Game.mp3",
+        "songName": "Dazzling Game",
+        "songAuthor": "Liella!",
+        "songImg" : "PigSystem/pip system music/small_img/Dazzling Game.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/Starlight Prologue.mp3",
+        "songName": "Starlight Prologue",
+        "songAuthor": "Liella!",
+        "songImg" : "PigSystem/pip system music/small_img/Starlight Prologue_maxresdefault.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/Weight of the World⧸壊レタ世界ノ歌.mp3",
+        "songName": "Weight of the World",
+        "songAuthor": "Keiichi Okabe",
+        "songImg" : "PigSystem/pip system music/small_img/Weight of the World_壊レタ世界ノ歌.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/What Makes the Sky Blue.mp3",
+        "songName": "What Makes the Sky Blue",
+        "songAuthor": "成田勤",
+        "songImg" : "PigSystem/pip system music/small_img/What Makes the Sky Blue_maxresdefault.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/ぼくのかみさま ⧸ ワンダーランズ×ショウタイム × 鏡音レン.mp3",
+        "songName": "ぼくのかみさま / ワンダーランズ×ショウタイム",
+        "songAuthor": "wonderlands x Showtime",
+        "songImg" : "PigSystem/pip system music/small_img/ぼくのかみさま _ ワンダーランズ×ショウタイム × 鏡音レン_maxresdefault.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/Let's be ONE.mp3",
+        "songName": "Let's be ONE",
+        "songAuthor": "Liella!",
+        "songImg" : "PigSystem/pip system music/small_img/Let's be ONE.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/未来予報ハレルヤ！.mp3",
+        "songName": "未来予報ハレルヤ！",
+        "songAuthor": "Liella!",
+        "songImg" : "PigSystem/pip system music/small_img/未来予報ハレルヤ！_maxresdefault.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/翁立友-堅持.mp3",
+        "songName": "堅持",
+        "songAuthor": "翁立友",
+        "songImg" : "PigSystem/pip system music/small_img/翁立友-堅持.jpg"
+    },
+    {
+        "songRoute" : "/PigSystem/pip system music/mp3s/運轉.mp3",
+        "songName": "運轉人生",
+        "songAuthor": "邱軍",
+        "songImg" : "PigSystem/pip system music/small_img/運轉.jpg"
+    }
+]

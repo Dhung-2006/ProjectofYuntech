@@ -8,8 +8,11 @@ import testmusic from "../video/1.mp3";
 // import ania from "../../public/ania.mov";
 import fish from "../images/fish.jpg";
 
+// json
+import SongList from "../jsons/songList.json";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faPause, faForwardStep, faUser, faBackwardStep, faVolumeLow, faPlay, faBook, faMusic, faVideo, faUpRightFromSquare, faCircleHalfStroke, faEllipsis, faPlus, faTrash, faGear, faXmark, faG, faAdd, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPause, faForwardStep, faUser, faBackwardStep, faVolumeLow, faPlay, faBook, faMusic, faVideo, faUpRightFromSquare, faCircleHalfStroke, faEllipsis, faPlus, faTrash, faGear, faXmark, faG, faAdd, faImage, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -34,6 +37,7 @@ const IntegrationFrame = () => {
     const [deleteBtn, setDeleteBtn] = useState(0);
     const [createBtn, setCreateBtn] = useState(0);
 
+    const [alertFrame, setAlertFrame] = useState(0);
 
     // music
     const [frameTime, setFrameTime] = useState(0); // 時間(軸)
@@ -41,9 +45,14 @@ const IntegrationFrame = () => {
     const [musicDuration, setmusicDuration] = useState(0);  // 時長
     const audioMusic = useRef(null);
     const [musicFrame, setMusicFrame] = useState(false);
-    const [songInfo, setSongInfo] = useState({ songName: "Luther (with sza)", songAuthor: "Allen Huang", songImgRoute: fish });
+    const [songInfo, setSongInfo] = useState({ songName: "Luther (with sza)", songAuthor: "Allen Huang", songImgRoute: "", songSource: "" });
 
-    // form 
+    // search 
+
+    const searchEvent = () => {
+
+    }
+
     // form 
     const [loginData, setLoginData] = useState({
 
@@ -60,8 +69,20 @@ const IntegrationFrame = () => {
         // // // // // // // // // // // // // // // // 
 
         logStatus: ""
+    })
+
+    const [newFormDatas, setNewFormDatas] = useState({
+
+        upload_title: "", // 標題
+        upload_author: "", // 作者
+        upload_inner: "",
+        upload_img: "",
+        select_file: null
 
     })
+    const [uploadDataName, setUploadDataName] = useState("");
+    const [deleteDataName, setDeleteDataName] = useState("");
+
     const URL = "http://localhost:8000/login";
     const userName = "Allenhnn_";
 
@@ -113,57 +134,48 @@ const IntegrationFrame = () => {
         // setLoginData({ account: "", createAccount: "", email: "", password: "", createPassword: "", createPassword_c: "" , logStatus : ""})
     };
 
-    const fullScreen = () => {
-        fullScreenStatus ? setFullScreenStatus(false) : setFullScreenStatus(true);
-
-        if (document.fullscreenElement == null || document.webkitFullscreenElement != null) {
-            enter()
-        }
-        else {
-            exit()
-        }
-        function exit() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            }
-        }
-        function enter() {
-            if (
-                !document.fullscreenElement && // alternative standard method
-                !document.mozFullScreenElement &&
-                !document.webkitFullscreenElement &&
-                !document.msFullscreenElement
-            ) {
-                if (document.documentElement.requestFullscreen) {
-                    document.documentElement.requestFullscreen();
-                } else if (document.documentElement.msRequestFullscreen) {
-                    document.documentElement.msRequestFullscreen();
-                } else if (document.documentElement.mozRequestFullScreen) {
-                    document.documentElement.mozRequestFullScreen();
-                } else if (document.documentElement.webkitRequestFullscreen) {
-                    document.documentElement.webkitRequestFullscreen(
-                        Element.ALLOW_KEYBOARD_INPUT,
-                    );
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                }
-            }
+    const newFormUpload = async(e) => {
+        e.preventDefault();
+        const POSTdata = JSON.stringify(newFormDatas);
+        try {
+            const response = await axios.post(URL, POSTdata, {
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRFToken': cookie
+                },
+                withCredentials: true
+            });
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
+
+    
+    const uploadImgFile = (event) => {
+        const file = event.target.files[0];
+        setUploadDataName(file.name);
+        setNewFormDatas((prev) => ({ ...prev, select_file: file }));
+
+    }
+
+    const deleteUploadFile = async() =>{
+        // 分頁 <==> 管理系統的 同步
+        // 刪除json
+        const POSTdata = deleteDataName;
+        try {
+            const response = await axios.post(URL, POSTdata, {
+                headers: {
+                    "Content-Type": "application/text",
+                    'X-CSRFToken': cookie
+                },
+                withCredentials: true
+            });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+
 
     // events
     const changeVolumn = e => {
@@ -301,12 +313,12 @@ const IntegrationFrame = () => {
                     </div>
                     <div className='searchBar'>
                         {/* <div className="home" onClick={() => navigate('/')}><FontAwesomeIcon icon={faHouse} /></div> */}
-                        <input type="text" placeholder='查詢想要的音樂...' />
+                        <input type="text" placeholder='查詢想要的音樂...' onChange={searchEvent} />
                         <div className="userFunc">
                             <div className="moreBtn"><FontAwesomeIcon icon={faEllipsis} />
                                 <div className="hidden_item">
                                     <div onClick={() => setLoginFrameStatus(1)} ><FontAwesomeIcon icon={faUser} /></div>
-                                    <div onClick={() => setLoginFrameStatus(1)} ><FontAwesomeIcon icon={faCircleHalfStroke} /></div>
+                                    <div><FontAwesomeIcon icon={faCircleHalfStroke} /></div>
                                 </div>
 
                             </div>
@@ -319,7 +331,7 @@ const IntegrationFrame = () => {
 
                 </nav>
                 <div className="mainSide">
-                    <div className="banner"><img src={fish} alt="" /></div>
+                    <div className="banner"><img src="" alt="" /></div>
 
                     <div className="blockes_container">
                         <div className="blockes_info">
@@ -327,10 +339,27 @@ const IntegrationFrame = () => {
                         </div>
                         <div className="blockes_outer_container">
                             <div className="blockes_outer_container">
-                                {Array.from({ length: 8 }).map((_, i) => (
+                                {
+                                    SongList.map((value, index) => {
+                                        return (
+                                            <div className="block_outer" key={index} onClick={() => { setMusicFrame(true); setSongInfo({ songName: value.songName, songAuthor: value.songAuthor, songImgRoute: value.songImg, songSource: value.songRoute }) }}>
+                                                <div className="black_drop"></div>
+                                                <div className="block_img"><img src={`${value.songImg}`} alt="" /></div>
+                                                <div className="hoverPlay"><FontAwesomeIcon icon={faPlay} /></div>
+                                                <div className="absolute_con">
+                                                    <div className="texts">
+                                                        <h3>{value.songName}</h3>
+                                                        <h4>{value.songAuthor}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                {/* {Array.from(SongList).map((_, i) => (
                                     <div className="block_outer" key={i} onClick={() => { setMusicFrame(true); setSongInfo({ songName: "SigmaBoi (with sza)", songAuthor: "Kendrick Lanmar", songImgRoute: { image } }) }}>
                                         <div className="black_drop"></div>
-                                        <div className="block_img"><img src={`${fish}`} alt="" /></div>
+                                        <div className="block_img"><img src={`${i.songRoute}`} alt="" /></div>
                                         <div className="hoverPlay"><FontAwesomeIcon icon={faPlay} /></div>
                                         <div className="absolute_con">
                                             <div className="texts">
@@ -339,7 +368,7 @@ const IntegrationFrame = () => {
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                     </div>
@@ -348,14 +377,15 @@ const IntegrationFrame = () => {
             </div>
 
 
-            <div className={`full_music ${!musicFrame ? "slideDown" : "slideUp"}`} style={{ background: `url(${songInfo.songImgRoute}) center center` }}>
-                <div className="cls" onClick={ClearInputValue}><FontAwesomeIcon icon={faUpRightFromSquare} /></div>
+            <div className={`full_music ${!musicFrame ? "slideDown" : "slideUp"}`} style={{ background: `url('${songInfo.songImgRoute}') center center` }}>
+                <div className="cls" onClick={() => { ClearInputValue(); pauseMusic() }}><FontAwesomeIcon icon={faUpRightFromSquare} /></div>
                 <div className="black_cover" />
                 <div className="music_intro">
-                    <div className="music_img" style={{ background: `url(${songInfo.songImgRoute}) center center` }} />
+                    <div className="music_img" style={{ background: `url("${songInfo.songImgRoute}") center center` }} />
                     <div className="music_text">
                         <h1>{songInfo.songName}</h1>
                         <h3>{songInfo.songAuthor}</h3>
+                        {/* <h3>{songInfo.songImgRoute}</h3> */}
                     </div>
                 </div>
                 <div className="playBar">
@@ -394,6 +424,7 @@ const IntegrationFrame = () => {
 
 
             <audio ref={audioMusic}
+                key={songInfo.songSource}
                 onLoadedMetadata={() => {
                     if (audioMusic.current) {
                         setmusicLong(audioMusic.current.duration)
@@ -403,7 +434,7 @@ const IntegrationFrame = () => {
             >
 
                 <source
-                    src={testmusic}
+                    src={songInfo.songSource}
                     type="audio/ogg" />
 
             </audio>
@@ -413,7 +444,7 @@ const IntegrationFrame = () => {
             <div className={`login_frame ${loginFrameStatus === 0 ? "opNone" : ""}`} >
                 <div className='login_container' >
 
-                    <div className="logo">會員管理系統</div>
+                    <div className="logo">音樂管理系統</div>
                     <div className='log_reg'>
                         <div className={`log_btn ${deleteBtn ? "log_btn_click" : ""} ${loginFrame === 1 ? "clicked" : ""}`} onClick={deleteBtn ? () => setDeleteBtn(0) : () => setDeleteBtn(1)} >刪除 <FontAwesomeIcon icon={faTrash} style={{ marginLeft: "0.65rem" }} /> </div>
                         <div className={`log_btn ${createBtn ? "log_btn_click_2" : ""} ${loginFrame !== 1 ? "clicked" : ""}`} onClick={createBtn ? () => setCreateBtn(0) : () => setCreateBtn(1)}>新增 <FontAwesomeIcon icon={faPlus} style={{ marginLeft: "0.65rem" }} /></div>
@@ -435,43 +466,22 @@ const IntegrationFrame = () => {
                                 setVerifyFrameStatus(1);
                             }}>
                         <div className="frame_overflow">
+                            {
+                                SongList.map((value, index) => {
+                                    return (
+                                        <div className="song_info">
+                                            <div className="song_img"><img src={value.songImg} alt="" /></div>
+                                            <div className="song_detail">
+                                                <h3>{(value.songName).length > 5 ? String(value.songName).substring(0, 8) + " ..." : value.songName}</h3>
+                                                <h4>{(value.songAuthor).length > 5 ? String(value.songAuthor).substring(0, 8) + " ..." : value.songAuthor}</h4>
+                                            </div>
+                                            <div className="songType">音樂</div>
+                                            <div className={`delete ${!deleteBtn ? "opNone" : ""}`} onClick={() => {setAlertFrame(1);setDeleteDataName(value.songName)}}><FontAwesomeIcon icon={faTrash} /></div>
+                                        </div>
+                                    )
+                                })
+                            }
 
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">音樂</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">影片</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">電子書</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
-                            <div className="song_info">
-                                <div className="song_img"><img src={fish} alt="" /></div>
-                                <div className="song_detail">
-                                    <h3>Sigmaboi</h3>
-                                    <h4>Allen</h4>
-                                </div>
-                                <div className="songType">音樂</div>
-                                <div className={`delete ${!deleteBtn ? "opNone" : ""}`}><FontAwesomeIcon icon={faTrash} /></div>
-                            </div>
 
 
 
@@ -479,7 +489,7 @@ const IntegrationFrame = () => {
 
                         <div className='signInBtns'>
                             <button type='submit' className='signInBtn' onClick={() => setLoginFrameStatus(0)}>取消</button>
-                            <button type='submit' className='signInBtn' >更新</button>
+                            {/*<button type='submit' className='signInBtn' >更新</button>*/}
                         </div>
 
 
@@ -487,42 +497,66 @@ const IntegrationFrame = () => {
                     </form>
 
 
-                    <div className={`addSongFrame ${!createBtn?"opNone":""}`}>
+                    <form method="POST" onSubmit={newFormUpload} className={`addSongFrame ${!createBtn ? "opNone" : ""}`}>
                         {/* 照片 */}
                         <div className="FrameContainer">
-                            <div className="inner">
-                                <div className="addSongImg">
-                                    <FontAwesomeIcon icon={faImage} />
+                            <label className="inner" for="upload_img">
+                                <div className={`addSongImg ${!uploadDataName == "" ? "bgFull" : ""}`}>
+                                    {uploadDataName == "" ?
+                                        <FontAwesomeIcon icon={faImage} style={{fontSize:"2.5rem"}}/>
+                                        :
+                                        uploadDataName
+                                    }
                                 </div>
-                                <h3>上傳照片</h3>
+                                <h3>上傳照片 (*.jpg *.png)</h3>
                                 <h4>上傳可以清楚表達內容的圖片</h4>
-                            </div>
+                                {/* <p>file : {uploadDataName}</p> */}
+                            </label>
                             <div className="inner">
                                 {/* 標題 */}
                                 <div>
                                     <h3>標題</h3>
-                                    <input type="text" />
+                                    <input type="text" name="new_upload_title" required />
                                 </div>
                                 {/* 作者 */}
                                 <div>
                                     <h3>作者</h3>
-                                    <input type="text" />
+                                    <input type="text" name="new_upload_author" required />
                                 </div>
                                 {/* 內文 */}
                                 <div>
                                     <h3>內容</h3>
-                                    <textarea type="textarea" />
+                                    <textarea type="textarea" name="new_upload_inner" required />
                                 </div>
                             </div>
                         </div>
                         <div className="frameBtns">
-                            <div className="frameBtn" onClick={()=>setCreateBtn(0)}>取消</div>
-                            <div className="frameBtn" onClick={()=>setCreateBtn(0)}>送出</div>
+                            <div className="frameBtn" onClick={() => setCreateBtn(0)}>取消</div>
+                            <button className="frameBtn" type="submit">送出</button>
                         </div>
-                    </div>
+                        <input type="file" id="upload_img" name="post_img" style={{ display: "none" }} onChange={uploadImgFile} />
+                    </form>
+
                 </div>
             </div>
             {/* <video src="/ania.mov" controls></video> */}
+            <div className="setting">
+
+            </div>
+            <div className={`full_absolute ${!alertFrame ? "opNone" : ""}`}>
+                <div className="alertFrame">
+                    <div className="alert_icon"><FontAwesomeIcon icon={faTriangleExclamation} /></div>
+                    <div className="alert_text">
+                        <h1>您確定要刪除此檔案嗎？</h1>
+                        <h3>( 刪除後即無法復原 )</h3>
+                    </div>
+                    <div className="alert_btns">
+                        <div className="alert_btn" onClick={() => setAlertFrame(0)}>取消</div>
+                        <div className="alert_btn" onClick={deleteUploadFile}>確定</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 

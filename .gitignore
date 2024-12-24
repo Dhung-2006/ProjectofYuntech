@@ -1,2 +1,10 @@
 node_modules/
 public/
+
+backend/ebook_folder/
+backend/ebook_image/
+backend/film_image/
+backend/films_folder/
+backend/films_folder/
+backend/musics_folder/
+backend/musics_image/

@@ -74,6 +74,10 @@ class ReactView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+        
+def all_music(request):
+    musics = Music.objects.all()
+    return musics        
 
 def login(request):
     print("g")

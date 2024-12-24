@@ -16,7 +16,8 @@
 
 $nav_height: 12vh;
 $playBar_height: 9vh;
-$backdrop: #0000005d;
+// $backdrop: #0000005d;
+$backdrop: rgba(255, 255, 255, 0.127);
 
 
 .bgP {
@@ -102,7 +103,8 @@ body {
                 height: 3rem;
                 aspect-ratio: 1/1;
                 border-radius: 50%;
-                background-color: rgba(0, 0, 0, 0.15);
+                // background-color: rgba(0, 0, 0, 0.15);
+                background-color: $backdrop;
                 // background-color: #1f1f1f;
                 margin-right: 1rem;
                 cursor: pointer;
@@ -124,7 +126,8 @@ body {
                 border-radius: 25rem;
                 font-size: 1.125rem;
                 padding: 0 0 0 2rem;
-                background-color: rgba(0, 0, 0, 0.15);
+                // background-color: rgba(0, 0, 0, 0.15);
+                background-color:$backdrop;
                 color: white;
                 transition: .3s;
                 border: none;
@@ -244,7 +247,7 @@ body {
             // background-color: rgb(211, 123, 123);
             background-color: $backdrop;
             backdrop-filter: blur(50px);
-            margin: 5px;
+            margin: 0 20px;
             border-radius: 25px;
 
             .userInfo {
@@ -264,7 +267,8 @@ body {
                     left: 0;
                     height: 100%;
                     width: 100%;
-                    background-color: rgba(0, 0, 0, 0.75);
+                    // background-color: rgba(0, 0, 0, 0.75);
+                    background-color: $backdrop;
                 }
 
                 .infoOuter {
@@ -328,7 +332,7 @@ body {
             // display: flex;
             // flex-direction: column;
             // align-items: center;
-            width: 63%;
+            width: 65%;
             height: auto;
             // background-color: rgb(108, 190, 133);
             background-color: $backdrop;
@@ -427,7 +431,7 @@ body {
             // background-color: rgb(196, 110, 218);
             background-color: $backdrop;
             backdrop-filter: blur(50px);
-            margin: 5px;
+            margin: 0 20px;
             border-radius: 25px;
 
             .songInfo {
@@ -772,7 +776,7 @@ body {
                 .codes {
                     display: flex;
                     align-items: center;
-                    margin: 1rem 0 0 0;
+                    margin: 2rem 0 0 0;
 
                     input {
                         height: 5rem;

@@ -91,7 +91,9 @@ $box_shadow : 2px 2px 10px white;
         }
     }
 }
-
+.bgFull{
+    background-color: rgba(141, 36, 194, 0.669) !important;
+}
 .opNone {
     opacity: 0;
     pointer-events: none;
@@ -150,6 +152,7 @@ body {
         & h3,
         & h4 {
             margin: 0;
+            text-align: left;
         }
 
         & h4 {
@@ -522,7 +525,8 @@ body {
                 & img {
                     height: inherit;
                     width: inherit;
-                    // object-fit: cover;
+                    object-fit: cover;
+
                 }
             }
 
@@ -608,6 +612,7 @@ body {
                                 height: inherit;
                                 border-radius: 25px;
                                 aspect-ratio: 1/1;
+                                object-fit: cover;
 
                             }
                         }
@@ -690,7 +695,7 @@ body {
                 height: 8rem;
                 aspect-ratio: 1/1;
                 border-radius: 5px;
-                background-size: contain !important;
+                background-size: cover !important;
             }
 
             .music_text {
@@ -947,7 +952,7 @@ body {
             justify-content: center;
             // height: 35rem;
             // aspect-ratio: 0.45 / 0.55;
-            width: 26rem;
+            width: 30rem;
             // background-color: rgba(255, 255, 255, 0.313);
             background: linear-gradient(240deg, rgba(86, 13, 122, 1) 0%, rgba(114, 56, 137, 1) 46%, rgba(170, 66, 140, 1) 100%);
             font-family: f1;
@@ -1067,10 +1072,12 @@ body {
                             aspect-ratio: 1/1;
                             border-radius: 12px;
                             margin-right: 2rem;
+                            object-fit: cover;
                         }
 
                         .song_detail {
                             margin-right: 2rem;
+                            width: 8rem;
 
                             h3 {}
 
@@ -1162,7 +1169,8 @@ body {
             width: 50rem;
             padding: 6rem 2rem;
             border-radius: 25px;
-            background-color: #252525;
+            background-color: #25252579;
+            backdrop-filter: blur(50px);
             transition: .25s;
             // background:linear-gradient(180deg, rgba(86, 13, 122, 1) 0%, rgba(114, 56, 137, 1) 46%, rgba(170, 66, 140, 1) 100%);
 
@@ -1193,29 +1201,32 @@ body {
 
                     .addSongImg {
                         @include all-center();
-                        position:relative;
+                        position: relative;
                         height: 15rem;
-                        font-size: 3rem;
+                        font-size: 1.5rem;
                         aspect-ratio: 1/1;
                         border-radius: 12px;
                         background-color: rgba(255, 255, 255, 0.315);
-                        
+
                         overflow: hidden;
-                        &::before{
+
+                        &::before {
                             content: '上傳圖片';
                             @include all-center();
-                            position:absolute;
+                            position: absolute;
                             bottom: 0;
                             left: 0;
                             height: 0%;
                             width: 100%;
                             transition: .35s;
                             font-size: 1.5rem;
+                            letter-spacing: 1.5px;
                             opacity: 0;
-                            background-color:rgb(141, 36, 194);
+                            background: linear-gradient(180deg, rgba(86, 13, 122, 1) 0%, rgba(114, 56, 137, 1) 46%, rgba(170, 66, 140, 1) 100%);
                             cursor: pointer;
                         }
-                        &:hover::before{
+
+                        &:hover::before {
                             opacity: 1;
                             height: 100%;
                         }
@@ -1238,6 +1249,10 @@ body {
                 .frameBtn {
                     padding: 0.85rem 4rem;
                     background-color: rgb(143, 71, 179);
+                    font-family: f1;
+                    color: white;
+                    font-size: 1.125rem;
+                    border: none;
                     border-radius: 25px;
                     margin: 0 1rem;
                     transition: .25s;
@@ -1251,6 +1266,63 @@ body {
             }
         }
 
+    }
+
+    .full_absolute {
+        @include all-center();
+        position: absolute;
+        height: 100vh;
+        transition: .25s;
+
+        .alertFrame {
+            @include all-center();
+            flex-direction: column;
+            padding: 2rem 5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            font-family: f1;
+            transition: .25s;
+
+            .alert_icon {
+                font-size: 5rem;
+                color: #e1551d;
+            }
+
+            .alert_text {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+
+                h1,
+                h3 {
+                    margin: 0;
+                }
+            }
+
+            .alert_btns {
+                display: flex;
+                margin-top: 2rem;
+
+                .alert_btn {
+                    font-size: 1.25rem;
+                    padding: 0.45rem 2.5rem;
+                    border-radius: 25px;
+                    margin: 0 1rem;
+                    transition: .25s;
+                    cursor: pointer;
+
+                    &:nth-child(2) {
+                        background-color: #e1551d;
+                    }
+
+                    &:hover {
+                        background-color: white;
+                        color: #e1551d;
+                    }
+                }
+            }
+        }
     }
 
 
